@@ -2,7 +2,7 @@
     <string name="app_name">ComposeQR</string>
 
     <!-- QR List -->
-    <string name="qr_list_help_text">Todos los QR leídos se guardarán automáticamente y podrás volver a acceder a ellos sin necesidad de sacar la cámara 😄 \n\n
+    <string name="qr_list_help_text">Todos los QR leídos se guardarán automáticamente y podrás volver a acceder a ellos sin necesidad de usar la cámara 😄 \n\n
         Se puede modificar el nombre del QR guardado para identificarlo facilmente y de un solo vistazo 🤩 \n\n
     Próximamente se podrán añadir categorías como Restaurantes, Tiendas y mucho más para tener todos los enlaces ordenados 🥰</string>
     <string name="qr_list_error">Ha ocurrido un error 😰</string>
