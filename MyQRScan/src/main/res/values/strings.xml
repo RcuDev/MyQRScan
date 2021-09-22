@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">ComposeQR</string>
+
+    <!-- QR List -->
+    <string name="qr_list_help_text">Todos los QR leídos se guardarán automáticamente y podrás volver a acceder a ellos sin necesidad de sacar la cámara 😄 \n\n
+        Se puede modificar el nombre del QR guardado para identificarlo facilmente y de un solo vistazo 🤩 \n\n
+    Próximamente se podrán añadir categorías como Restaurantes, Tiendas y mucho más para tener todos los enlaces ordenados 🥰</string>
+    <string name="qr_list_error">Ha ocurrido un error 😰</string>
+    <string name="qr_list_scan">Escanear QR</string>
+
+    <!-- QR Item -->
+    <string name="qr_item_empty_name">QR sin nombre 😱</string>
+    <string name="qr_item_invalid_url">No se puede abrir el enlace 🥺</string>
+    <string name="qr_item_edit_qr_accessibility">Editar el nombre del QR</string>
+    <string name="qr_item_delete_qr_accessibility">Borrar el QR</string>
+
+    <!-- Dialog -->
+    <string name="qr_dialog_confirm">✔️ Confirmar</string>
+    <string name="qr_dialog_cancel">❌ Cancelar</string>
+
+    <string name="qr_edit_dialog_title">Editar QR</string>
+    <string name="qr_edit_dialog_description">Personaliza el nombre del QR ☺️</string>
+    <string name="qr_delete_dialog_title">Eliminar QR</string>
+    <string name="qr_delete_dialog_description">¿Quieres eliminar este QR de la lista? 😭</string>
+
+</resources>

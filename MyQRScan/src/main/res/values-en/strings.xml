@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ComposeQR</string>
+
+    <!-- QR List -->
+    <string name="qr_list_help_text">All the QR codes read will be automatically saved and you can access them again without removing the camera 😄 \n\n
+        You can modify the name of the saved QR code to identify it easily and at a glance 🤩 \n\n
+    Soon, categories such as Restaurants, Shops and much more will be added to have all the links ordered 🥰</string>
+    <string name="qr_list_error">An error has occurred 😰</string>
+    <string name="qr_list_scan">Scan QR</string>
+
+    <!-- QR Item -->
+    <string name="qr_item_empty_name">Unnamed QR 😱</string>
+    <string name="qr_item_invalid_url">Can\'t open link 🥺</string>
+    <string name="qr_item_edit_qr_accessibility">Edit QR name</string>
+    <string name="qr_item_delete_qr_accessibility">Delete QR</string>
+
+    <!-- Dialog -->
+    <string name="qr_dialog_confirm">✔️ Confirm</string>
+    <string name="qr_dialog_cancel">❌ Cancel</string>
+
+    <string name="qr_edit_dialog_title">Edit QR</string>
+    <string name="qr_edit_dialog_description">Customize QR name ☺️</string>
+    <string name="qr_delete_dialog_title">Delete QR</string>
+    <string name="qr_delete_dialog_description">Do you want to remove this QR from the list? 😭</string>
+</resources>
