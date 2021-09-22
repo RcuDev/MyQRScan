@@ -3,8 +3,8 @@
 
     <!-- QR List -->
     <string name="qr_list_help_text">Todos los QR leídos se guardarán automáticamente y podrás volver a acceder a ellos sin necesidad de usar la cámara 😄 \n\n
-        Se puede modificar el nombre del QR guardado para identificarlo facilmente y de un solo vistazo 🤩 \n\n
-    Próximamente se podrán añadir categorías como Restaurantes, Tiendas y mucho más para tener todos los enlaces ordenados 🥰</string>
+        Se puede modificar el nombre del QR guardado para identificarlo fácilmente y de un sólo vistazo 🤩 \n\n
+    Próximamente se podrán añadir categorías como restaurantes, tiendas y mucho más, así tendrás todos los enlaces ordenados 🥰</string>
     <string name="qr_list_error">Ha ocurrido un error 😰</string>
     <string name="qr_list_scan">Escanear QR</string>
 
