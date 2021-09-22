@@ -86,6 +86,7 @@ fun RecentScanScreen(
                 onClick = {
                     val qrScanner = IntentIntegrator(context)
                     qrScanner.setBarcodeImageEnabled(true)
+                    qrScanner.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
                     qrScanner.setBeepEnabled(true)
                     qrScanner.initiateScan()
                 }, colors = ButtonDefaults.buttonColors(
