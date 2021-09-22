@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ComposeQR</string>
+    <string name="app_name">MyQRScan</string>
 
     <!-- QR List -->
     <string name="qr_list_help_text">All the QRs read will be saved automatically and you can access them again without using the camera 😄 \n\n

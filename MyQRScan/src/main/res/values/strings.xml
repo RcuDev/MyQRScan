@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ComposeQR</string>
+    <string name="app_name">MyQRScan</string>
 
     <!-- QR List -->
     <string name="qr_list_help_text">Todos los QR leídos se guardarán automáticamente y podrás volver a acceder a ellos sin necesidad de usar la cámara 😄 \n\n
