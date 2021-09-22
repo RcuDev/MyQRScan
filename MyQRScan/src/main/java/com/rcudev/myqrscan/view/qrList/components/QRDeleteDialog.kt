@@ -5,6 +5,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 import com.rcudev.myqrscan.R
 import com.rcudev.myqrscan.data.local.model.QRItem
 import com.rcudev.myqrscan.view.qrList.RecentScanViewModel
@@ -19,10 +21,17 @@ fun QRDeleteDialog(viewModel: RecentScanViewModel, qrToDelete: QRItem) {
                 state.showDeleteDialog.value = false
             },
             title = {
-                Text(text = stringResource(id = R.string.qr_delete_dialog_title))
+                Text(
+                    text = stringResource(id = R.string.qr_delete_dialog_title),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
+                )
             },
             text = {
-                Text(text = stringResource(id = R.string.qr_delete_dialog_description))
+                Text(
+                    text = stringResource(id = R.string.qr_delete_dialog_description),
+                    fontSize = 14.sp
+                )
             },
             confirmButton = {
                 TextButton(
@@ -30,7 +39,7 @@ fun QRDeleteDialog(viewModel: RecentScanViewModel, qrToDelete: QRItem) {
                         viewModel.deleteQR(qrToDelete)
                         state.showDeleteDialog.value = false
                     }) {
-                    Text(stringResource(id = R.string.qr_dialog_confirm))
+                    Text(stringResource(id = R.string.qr_dialog_confirm), fontSize = 14.sp)
                 }
             },
             dismissButton = {
@@ -38,7 +47,7 @@ fun QRDeleteDialog(viewModel: RecentScanViewModel, qrToDelete: QRItem) {
                     onClick = {
                         state.showDeleteDialog.value = false
                     }) {
-                    Text(stringResource(id = R.string.qr_dialog_cancel))
+                    Text(stringResource(id = R.string.qr_dialog_cancel), fontSize = 14.sp)
                 }
             }
         )
