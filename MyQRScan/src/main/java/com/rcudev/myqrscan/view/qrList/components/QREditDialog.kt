@@ -28,6 +28,10 @@ fun QREditDialog(viewModel: RecentScanViewModel, qrToEdit: QRItem) {
     val emptyNameString = stringResource(id = R.string.qr_item_empty_name)
     var newQrName by remember { mutableStateOf("") }
 
+    qrToEdit.let {
+        newQrName = if (qrToEdit.name.equals(qrToEdit.url)) "" else qrToEdit.name ?: ""
+    }
+
     if (state.showEditDialog.value) {
         AlertDialog(
             onDismissRequest = {
