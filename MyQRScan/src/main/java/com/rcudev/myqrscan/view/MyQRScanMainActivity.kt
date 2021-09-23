@@ -53,7 +53,8 @@ class MyQRScanMainActivity : ComponentActivity() {
 
         if (result != null) {
             if (result.contents == null) {
-                Toast.makeText(this, "Cancelado", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.qr_dialog_cancel), Toast.LENGTH_SHORT)
+                    .show()
             } else {
                 viewModel.saveQR(QRItem(null, result.contents, result.contents))
             }
