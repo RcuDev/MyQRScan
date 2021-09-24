@@ -58,7 +58,7 @@ fun RecentScanScreen(
                 verticalArrangement = Arrangement.spacedBy(5.dp),
                 contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp)
             ) {
-                items(state.qrList) { qrItem ->
+                items(state.qrList.reversed()) { qrItem ->
                     Spacer(
                         modifier = Modifier
                             .height(5.dp)
