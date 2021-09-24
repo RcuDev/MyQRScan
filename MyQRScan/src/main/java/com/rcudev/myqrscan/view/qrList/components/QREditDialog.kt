@@ -20,10 +20,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rcudev.myqrscan.R
 import com.rcudev.myqrscan.data.local.model.QRItem
-import com.rcudev.myqrscan.view.qrList.RecentScanViewModel
+import com.rcudev.myqrscan.view.qrList.QRListViewModel
 
 @Composable
-fun QREditDialog(viewModel: RecentScanViewModel, qrToEdit: QRItem) {
+fun QREditDialog(viewModel: QRListViewModel, qrToEdit: QRItem) {
     val state = viewModel.state.value
     val emptyNameString = stringResource(id = R.string.qr_item_empty_name)
     var newQrName by remember { mutableStateOf("") }

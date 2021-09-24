@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RecentScanViewModel @Inject constructor(
+class QRListViewModel @Inject constructor(
     private val getQRListUseCase: GetQRListUseCase,
     private val saveQRUseCase: SaveQRUseCase,
     private val updateUseCase: UpdateQRUseCase,

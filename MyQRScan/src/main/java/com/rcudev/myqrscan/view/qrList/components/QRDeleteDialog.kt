@@ -9,10 +9,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.rcudev.myqrscan.R
 import com.rcudev.myqrscan.data.local.model.QRItem
-import com.rcudev.myqrscan.view.qrList.RecentScanViewModel
+import com.rcudev.myqrscan.view.qrList.QRListViewModel
 
 @Composable
-fun QRDeleteDialog(viewModel: RecentScanViewModel, qrToDelete: QRItem) {
+fun QRDeleteDialog(viewModel: QRListViewModel, qrToDelete: QRItem) {
     val state = viewModel.state.value
 
     if (state.showDeleteDialog.value) {

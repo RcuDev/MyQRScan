@@ -28,6 +28,7 @@ object DataModule {
         Room.databaseBuilder(context, MyQRScanDb::class.java, "qr").allowMainThreadQueries().build()
 
     @Provides
+    @Singleton
     fun provideMyQRScanDao(myQRScanDb: MyQRScanDb) = myQRScanDb.composeQRDao()
 
 }

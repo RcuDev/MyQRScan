@@ -14,22 +14,22 @@ import com.google.android.gms.ads.*
 import com.google.zxing.integration.android.IntentIntegrator
 import com.rcudev.myqrscan.R
 import com.rcudev.myqrscan.data.local.model.QRItem
-import com.rcudev.myqrscan.view.qrList.RecentScanViewModel
-import com.rcudev.myqrscan.view.qrList.components.RecentScanScreen
+import com.rcudev.myqrscan.view.qrList.QRListViewModel
+import com.rcudev.myqrscan.view.qrList.components.QRListScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class MyQRScanMainActivity : ComponentActivity() {
 
-    private val viewModel: RecentScanViewModel by viewModels()
+    private val viewModel: QRListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_qr_scan_main)
         findViewById<ComposeView>(R.id.myqrscan_compose_container).setContent {
             Surface(modifier = Modifier.fillMaxSize()) {
-                RecentScanScreen(this, viewModel)
+                QRListScreen(this, viewModel)
             }
         }
 
