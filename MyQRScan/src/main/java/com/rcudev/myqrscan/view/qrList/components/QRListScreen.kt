@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -122,6 +123,7 @@ fun QRListScreen(
                 text = stringResource(id = R.string.qr_list_error),
                 color = MaterialTheme.colors.error,
                 fontSize = 16.sp,
+                fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -132,7 +134,7 @@ fun QRListScreen(
             Text(
                 text = stringResource(id = R.string.qr_list_help_text),
                 fontSize = 16.sp,
-                color = Color.Black,
+                fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth()
