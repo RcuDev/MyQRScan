@@ -4,10 +4,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -23,9 +24,12 @@ import com.rcudev.myqrscan.data.local.model.QRItem
 fun RecentScanItem(
     qrItem: QRItem,
     onCardClick: (QRItem) -> Unit,
-    onEditQRClick: (QRItem) -> Unit,
-    onDeleteQRClick: (QRItem) -> Unit
+    onEditQRClick: () -> Unit,
+    onShareQRClick: () -> Unit,
+    onDeleteQRClick: () -> Unit
 ) {
+
+    var expanded by remember { mutableStateOf(false) }
 
     Card(
         shape = RoundedCornerShape(6.dp),
@@ -47,24 +51,55 @@ fun RecentScanItem(
                     .wrapContentWidth(Alignment.Start)
                     .align(Alignment.CenterVertically),
             )
-            IconButton(
-                onClick = { onEditQRClick(qrItem) },
-                modifier = Modifier.wrapContentWidth(Alignment.End)
+
+            Box(
+                modifier = Modifier
+                    .wrapContentWidth(Alignment.End)
             ) {
-                Image(
-                    painterResource(id = R.drawable.ic_edit_button),
-                    stringResource(id = R.string.qr_item_edit_qr_accessibility),
-                )
+                IconButton(onClick = {
+                    expanded = true
+                }) {
+                    Icon(Icons.Default.Menu, contentDescription = "Localized description")
+                }
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    IconButton(
+                        onClick = {
+                            onEditQRClick()
+                            expanded = false
+                        }
+                    ) {
+                        Image(
+                            painterResource(id = R.drawable.ic_edit_button),
+                            stringResource(id = R.string.qr_item_edit_qr_accessibility),
+                        )
+                    }
+                    IconButton(
+                        onClick = {
+                            onShareQRClick()
+                        }
+                    ) {
+                        Image(
+                            painterResource(id = R.drawable.ic_share_button),
+                            stringResource(id = R.string.qr_item_edit_qr_accessibility),
+                        )
+                    }
+                    Divider()
+                    IconButton(
+                        onClick = {
+                            onDeleteQRClick()
+                        }
+                    ) {
+                        Image(
+                            painterResource(id = R.drawable.ic_delete_button),
+                            stringResource(id = R.string.qr_item_delete_qr_accessibility),
+                        )
+                    }
+                }
             }
-            IconButton(
-                onClick = { onDeleteQRClick(qrItem) },
-                modifier = Modifier.wrapContentWidth(Alignment.End)
-            ) {
-                Image(
-                    painterResource(id = R.drawable.ic_delete_button),
-                    stringResource(id = R.string.qr_item_delete_qr_accessibility),
-                )
-            }
+
         }
     }
 }

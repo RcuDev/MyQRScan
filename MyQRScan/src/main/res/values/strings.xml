@@ -13,6 +13,7 @@
     <string name="qr_item_empty_name">QR sin nombre 😱</string>
     <string name="qr_item_invalid_url">No se puede abrir el enlace 🥺</string>
     <string name="qr_item_edit_qr_accessibility">Editar el nombre del QR</string>
+    <string name="qr_item_share_qr_accessibility">Compartir el QR</string>
     <string name="qr_item_delete_qr_accessibility">Borrar el QR</string>
 
     <!-- Dialog -->

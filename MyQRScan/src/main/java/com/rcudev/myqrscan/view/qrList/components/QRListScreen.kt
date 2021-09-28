@@ -28,11 +28,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat.startActivity
 import com.google.zxing.integration.android.IntentIntegrator
 import com.rcudev.myqrscan.R
 import com.rcudev.myqrscan.data.local.model.QRItem
 import com.rcudev.myqrscan.view.qrList.QRListViewModel
+
+const val SHARE_QR_TYPE = "text/plain"
 
 @Composable
 fun QRListScreen(
@@ -41,6 +44,7 @@ fun QRListScreen(
 ) {
     val state = viewModel.state.value
     val invalidUrlString = stringResource(id = R.string.qr_item_invalid_url)
+    val shareQRString = stringResource(id = R.string.qr_item_share_qr_accessibility)
     var qrToEdit: QRItem by rememberSaveable { mutableStateOf(QRItem()) }
     var qrToDelete: QRItem by rememberSaveable { mutableStateOf(QRItem()) }
 
@@ -91,6 +95,13 @@ fun QRListScreen(
                             onEditQRClick = {
                                 qrToEdit = qrItem
                                 state.showEditDialog.value = true
+                            },
+                            onShareQRClick = {
+                                ShareCompat.IntentBuilder(context)
+                                    .setType(SHARE_QR_TYPE)
+                                    .setChooserTitle(shareQRString)
+                                    .setText(qrItem.url)
+                                    .startChooser()
                             },
                             onDeleteQRClick = {
                                 qrToDelete = qrItem
