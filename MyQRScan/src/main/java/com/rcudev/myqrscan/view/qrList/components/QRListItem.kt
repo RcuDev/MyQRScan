@@ -67,8 +67,8 @@ fun RecentScanItem(
                 ) {
                     IconButton(
                         onClick = {
-                            onEditQRClick()
                             expanded = false
+                            onEditQRClick()
                         }
                     ) {
                         Image(
@@ -78,6 +78,7 @@ fun RecentScanItem(
                     }
                     IconButton(
                         onClick = {
+                            expanded = false
                             onShareQRClick()
                         }
                     ) {
@@ -89,6 +90,7 @@ fun RecentScanItem(
                     Divider()
                     IconButton(
                         onClick = {
+                            expanded = false
                             onDeleteQRClick()
                         }
                     ) {
