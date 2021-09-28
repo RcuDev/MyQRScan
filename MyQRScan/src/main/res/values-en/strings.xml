@@ -8,7 +8,6 @@
     Categories such as restaurants, shops and much more will be added soon, so you will have all the links ordered 🥰</string>
     <string name="qr_list_error">An error has occurred 😰</string>
     <string name="qr_list_scan">Scan QR</string>
-    <string name="qr_list_cancel_scan">Cancelled</string>
 
     <!-- QR Item -->
     <string name="qr_item_empty_name">Unnamed QR 😱</string>

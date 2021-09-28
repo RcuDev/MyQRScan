@@ -7,7 +7,6 @@
     Próximamente se podrán añadir categorías como restaurantes, tiendas y mucho más, así tendrás todos los enlaces ordenados 🥰</string>
     <string name="qr_list_error">Ha ocurrido un error 😰</string>
     <string name="qr_list_scan">Escanear QR</string>
-    <string name="qr_list_cancel_scan">Cancelado</string>
 
     <!-- QR Item -->
     <string name="qr_item_empty_name">QR sin nombre 😱</string>

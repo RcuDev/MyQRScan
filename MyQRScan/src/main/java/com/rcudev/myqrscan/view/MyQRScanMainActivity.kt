@@ -3,7 +3,6 @@ package com.rcudev.myqrscan.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.View.GONE
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
@@ -52,10 +51,7 @@ class MyQRScanMainActivity : ComponentActivity() {
         val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
 
         if (result != null) {
-            if (result.contents == null) {
-                Toast.makeText(this, getString(R.string.qr_dialog_cancel), Toast.LENGTH_SHORT)
-                    .show()
-            } else {
+            if (result.contents != null) {
                 viewModel.saveQR(QRItem(null, result.contents, result.contents))
             }
         } else {
