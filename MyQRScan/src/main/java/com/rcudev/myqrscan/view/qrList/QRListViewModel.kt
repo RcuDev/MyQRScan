@@ -4,7 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rcudev.myqrscan.base.Resource
+import com.rcudev.myqrscan.base.TaskState
 import com.rcudev.myqrscan.data.local.model.QRItem
 import com.rcudev.myqrscan.domain.usecase.DeleteQRUseCase
 import com.rcudev.myqrscan.domain.usecase.GetQRListUseCase
@@ -36,32 +36,32 @@ class QRListViewModel @Inject constructor(
     private fun getQRList() {
         getQRListUseCase().onEach { result ->
             when (result) {
-                is Resource.Success -> {
+                is TaskState.Success -> {
                     _state.value = QRListState(qrList = result.data ?: emptyList())
                 }
-                is Resource.Error -> {
+                is TaskState.Error -> {
                     _state.value = QRListState(
                         error = result.message ?: "An unexpected error occured"
                     )
                 }
-                is Resource.Loading -> {
+                is TaskState.Loading -> {
                     _state.value = QRListState(isLoading = true)
                 }
             }
         }.launchIn(viewModelScope)
     }
 
-    private fun checkResult(result: Resource<List<QRItem>>) {
+    private fun checkResult(result: TaskState<List<QRItem>>) {
         when (result) {
-            is Resource.Success -> {
+            is TaskState.Success -> {
                 _state.value = QRListState(qrList = result.data ?: emptyList())
             }
-            is Resource.Error -> {
+            is TaskState.Error -> {
                 _state.value = QRListState(
                     error = result.message ?: "An unexpected error occured"
                 )
             }
-            is Resource.Loading -> {
+            is TaskState.Loading -> {
                 _state.value = QRListState(isLoading = true)
             }
         }
