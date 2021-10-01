@@ -8,7 +8,7 @@ import javax.inject.Inject
 class MyQRScanScanRepositoryImpl @Inject constructor(private val myQRScanDao: MyQRScanDao) :
     MyQRScanRepository {
 
-    override suspend fun getQRList() = myQRScanDao.getQRItemList()
+    override suspend fun getQRList() = listOf(QRItem(1, "Google", "https://google.com"), QRItem(2, "Firebase", ""))
 
     override suspend fun saveNewQR(qrToSave: QRItem): List<QRItem> {
         myQRScanDao.saveNewQR(qrItem = qrToSave)

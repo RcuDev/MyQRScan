@@ -64,77 +64,85 @@ fun QRListScreen(
         )
         if (state.error.isBlank()) {
             Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.SpaceBetween
+                modifier = Modifier.fillMaxSize()
             ) {
+                Column(
+                    modifier = Modifier.weight(weight = 1f),
+                    verticalArrangement = Arrangement.SpaceBetween
+                ) {
 
-                LazyColumn(
-                    modifier = Modifier
-                        .wrapContentHeight(align = Alignment.Top)
-                        .weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(5.dp),
-                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp)
-                ) {
-                    items(state.qrList.reversed()) { qrItem ->
-                        Spacer(
-                            modifier = Modifier
-                                .height(5.dp)
-                        )
-                        RecentScanItem(
-                            qrItem = qrItem,
-                            onCardClick = {
-                                if (URLUtil.isValidUrl(qrItem.url)) {
-                                    val openURL = Intent(Intent.ACTION_VIEW)
-                                    openURL.data = Uri.parse(qrItem.url)
-                                    startActivity(context, openURL, null)
-                                } else {
-                                    Toast.makeText(context, invalidUrlString, Toast.LENGTH_SHORT)
-                                        .show()
+                    LazyColumn(
+                        modifier = Modifier
+                            .wrapContentHeight(align = Alignment.Top)
+                            .weight(1f),
+                        verticalArrangement = Arrangement.spacedBy(5.dp),
+                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp)
+                    ) {
+                        items(state.qrList.reversed()) { qrItem ->
+                            Spacer(
+                                modifier = Modifier
+                                    .height(5.dp)
+                            )
+                            RecentScanItem(
+                                qrItem = qrItem,
+                                onCardClick = {
+                                    if (URLUtil.isValidUrl(qrItem.url)) {
+                                        val openURL = Intent(Intent.ACTION_VIEW)
+                                        openURL.data = Uri.parse(qrItem.url)
+                                        startActivity(context, openURL, null)
+                                    } else {
+                                        Toast.makeText(
+                                            context,
+                                            invalidUrlString,
+                                            Toast.LENGTH_SHORT
+                                        )
+                                            .show()
+                                    }
+                                },
+                                onEditQRClick = {
+                                    qrToEdit = qrItem
+                                    state.showEditDialog.value = true
+                                },
+                                onShareQRClick = {
+                                    ShareCompat.IntentBuilder(context)
+                                        .setType(SHARE_QR_TYPE)
+                                        .setChooserTitle(shareQRString)
+                                        .setText(qrItem.url)
+                                        .startChooser()
+                                },
+                                onDeleteQRClick = {
+                                    qrToDelete = qrItem
+                                    state.showDeleteDialog.value = true
                                 }
-                            },
-                            onEditQRClick = {
-                                qrToEdit = qrItem
-                                state.showEditDialog.value = true
-                            },
-                            onShareQRClick = {
-                                ShareCompat.IntentBuilder(context)
-                                    .setType(SHARE_QR_TYPE)
-                                    .setChooserTitle(shareQRString)
-                                    .setText(qrItem.url)
-                                    .startChooser()
-                            },
-                            onDeleteQRClick = {
-                                qrToDelete = qrItem
-                                state.showDeleteDialog.value = true
-                            }
-                        )
+                            )
+                        }
                     }
-                }
-                Button(
-                    onClick = {
-                        val qrScanner = IntentIntegrator(context)
-                        qrScanner.setBarcodeImageEnabled(true)
-                        qrScanner.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
-                        qrScanner.setBeepEnabled(true)
-                        qrScanner.initiateScan()
-                    }, colors = ButtonDefaults.buttonColors(
-                        backgroundColor = colorResource(id = R.color.Red900),
-                        contentColor = Color.White
-                    ),
-                    modifier = Modifier
-                        .wrapContentHeight(align = Alignment.Bottom)
-                        .fillMaxWidth(), shape = RoundedCornerShape(0.dp)
-                ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(
-                            text = stringResource(id = R.string.qr_list_scan),
-                            fontSize = 16.sp,
-                            modifier = Modifier.padding(5.dp, end = 10.dp)
-                        )
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_qr_icon),
-                            contentDescription = null
-                        )
+                    Button(
+                        onClick = {
+                            val qrScanner = IntentIntegrator(context)
+                            qrScanner.setBarcodeImageEnabled(true)
+                            qrScanner.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
+                            qrScanner.setBeepEnabled(true)
+                            qrScanner.initiateScan()
+                        }, colors = ButtonDefaults.buttonColors(
+                            backgroundColor = colorResource(id = R.color.Red900),
+                            contentColor = Color.White
+                        ),
+                        modifier = Modifier
+                            .wrapContentHeight(align = Alignment.Bottom)
+                            .fillMaxWidth(), shape = RoundedCornerShape(0.dp)
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(
+                                text = stringResource(id = R.string.qr_list_scan),
+                                fontSize = 16.sp,
+                                modifier = Modifier.padding(5.dp, end = 10.dp)
+                            )
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_qr_icon),
+                                contentDescription = null
+                            )
+                        }
                     }
                 }
             }
