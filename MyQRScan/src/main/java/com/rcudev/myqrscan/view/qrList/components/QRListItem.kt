@@ -50,7 +50,6 @@ fun RecentScanItem(
                     .wrapContentWidth(Alignment.Start)
                     .align(Alignment.CenterVertically),
             )
-
             Box(
                 modifier = Modifier
                     .wrapContentWidth(Alignment.End)
