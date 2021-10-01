@@ -3,7 +3,7 @@ package com.rcudev.myqrscan.view.qrList.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
@@ -31,9 +31,10 @@ fun RecentScanItem(
     var expanded by remember { mutableStateOf(false) }
 
     Card(
-        shape = RoundedCornerShape(6.dp),
+        shape = CircleShape,
         modifier = Modifier
             .fillMaxWidth()
+            .height(50.dp)
             .clickable { onCardClick(qrItem) },
         elevation = 6.dp
     ) {
@@ -46,13 +47,15 @@ fun RecentScanItem(
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier
                     .weight(1f)
-                    .padding(start = 10.dp)
+                    .padding(start = 16.dp)
                     .wrapContentWidth(Alignment.Start)
                     .align(Alignment.CenterVertically),
             )
             Box(
                 modifier = Modifier
+                    .padding(start = 6.dp)
                     .wrapContentWidth(Alignment.End)
+                    .align(Alignment.CenterVertically)
             ) {
                 IconButton(onClick = {
                     expanded = true
