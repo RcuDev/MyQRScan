@@ -132,7 +132,10 @@ fun QRListScreen(
                             .wrapContentHeight(align = Alignment.Bottom)
                             .fillMaxWidth(), shape = RoundedCornerShape(0.dp)
                     ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
+                        Row(
+                            modifier = Modifier.padding(8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
                             Text(
                                 text = stringResource(id = R.string.qr_list_scan),
                                 fontSize = 16.sp,

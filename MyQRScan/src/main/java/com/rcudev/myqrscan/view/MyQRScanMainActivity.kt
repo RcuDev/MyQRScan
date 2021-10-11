@@ -40,11 +40,6 @@ class MyQRScanMainActivity : ComponentActivity() {
         val adRequest = AdRequest.Builder().build()
         val bannerAdView: AdView = findViewById(R.id.myqrscan_admob_banner)
         bannerAdView.loadAd(adRequest)
-        bannerAdView.adListener = object : AdListener() {
-            override fun onAdFailedToLoad(adError: LoadAdError) {
-                bannerAdView.visibility = GONE
-            }
-        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
