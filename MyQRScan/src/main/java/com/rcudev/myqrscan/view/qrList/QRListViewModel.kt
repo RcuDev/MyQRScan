@@ -1,15 +1,13 @@
 package com.rcudev.myqrscan.view.qrList
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rcudev.myqrscan.base.TaskState
 import com.rcudev.myqrscan.data.local.model.QRItem
-import com.rcudev.myqrscan.domain.usecase.DeleteQRUseCase
-import com.rcudev.myqrscan.domain.usecase.GetQRListUseCase
-import com.rcudev.myqrscan.domain.usecase.SaveQRUseCase
-import com.rcudev.myqrscan.domain.usecase.UpdateQRUseCase
+import com.rcudev.myqrscan.domain.usecase.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -19,6 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class QRListViewModel @Inject constructor(
     private val getQRListUseCase: GetQRListUseCase,
+    private val getQRListByCategoryUseCase: GetQRListByCategoryUseCase,
     private val saveQRUseCase: SaveQRUseCase,
     private val updateUseCase: UpdateQRUseCase,
     private val deleteQRUseCase: DeleteQRUseCase
@@ -26,44 +25,11 @@ class QRListViewModel @Inject constructor(
 
     private val _state = mutableStateOf(QRListState())
     val state: State<QRListState> = _state
+    val selectedCategory: MutableState<String> = mutableStateOf("Recent")
 
     init {
         viewModelScope.launch {
-            getQRList()
-        }
-    }
-
-    private fun getQRList() {
-        getQRListUseCase().onEach { result ->
-            when (result) {
-                is TaskState.Success -> {
-                    _state.value = QRListState(qrList = result.data ?: emptyList())
-                }
-                is TaskState.Error -> {
-                    _state.value = QRListState(
-                        error = result.message ?: "An unexpected error occured"
-                    )
-                }
-                is TaskState.Loading -> {
-                    _state.value = QRListState(isLoading = true)
-                }
-            }
-        }.launchIn(viewModelScope)
-    }
-
-    private fun checkResult(result: TaskState<List<QRItem>>) {
-        when (result) {
-            is TaskState.Success -> {
-                _state.value = QRListState(qrList = result.data ?: emptyList())
-            }
-            is TaskState.Error -> {
-                _state.value = QRListState(
-                    error = result.message ?: "An unexpected error occured"
-                )
-            }
-            is TaskState.Loading -> {
-                _state.value = QRListState(isLoading = true)
-            }
+            getQRListByCategory()
         }
     }
 
@@ -83,6 +49,34 @@ class QRListViewModel @Inject constructor(
         deleteQRUseCase(qrToDelete).onEach { result ->
             checkResult(result = result)
         }.launchIn(viewModelScope)
+    }
+
+    fun getQRListByCategory() {
+        getQRListByCategoryUseCase(selectedCategory.value).onEach { result ->
+            checkResult(result = result)
+        }.launchIn(viewModelScope)
+    }
+
+    private fun checkResult(
+        result: TaskState<List<QRItem>>
+    ) {
+        when (result) {
+            is TaskState.Success -> {
+                _state.value =
+                    QRListState(
+                        qrList = result.data ?: emptyList(),
+                        selectedCategory = selectedCategory.value
+                    )
+            }
+            is TaskState.Error -> {
+                _state.value = QRListState(
+                    error = result.message ?: "An unexpected error occured"
+                )
+            }
+            is TaskState.Loading -> {
+                _state.value = QRListState(isLoading = true)
+            }
+        }
     }
 
 }

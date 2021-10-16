@@ -1,10 +1,7 @@
 package com.rcudev.myqrscan.di
 
 import com.rcudev.myqrscan.domain.repository.MyQRScanRepository
-import com.rcudev.myqrscan.domain.usecase.DeleteQRUseCase
-import com.rcudev.myqrscan.domain.usecase.GetQRListUseCase
-import com.rcudev.myqrscan.domain.usecase.SaveQRUseCase
-import com.rcudev.myqrscan.domain.usecase.UpdateQRUseCase
+import com.rcudev.myqrscan.domain.usecase.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +12,12 @@ import dagger.hilt.components.SingletonComponent
 object DomainModule {
 
     @Provides
-    fun provideGetQRListUseCase(scanRepository: MyQRScanRepository) = GetQRListUseCase(scanRepository)
+    fun provideGetQRListUseCase(scanRepository: MyQRScanRepository) =
+        GetQRListUseCase(scanRepository)
+
+    @Provides
+    fun provideGetQRListByCategoryUseCase(scanRepository: MyQRScanRepository) =
+        GetQRListByCategoryUseCase(scanRepository)
 
     @Provides
     fun provideSaveQRUseCase(scanRepository: MyQRScanRepository) = SaveQRUseCase(scanRepository)

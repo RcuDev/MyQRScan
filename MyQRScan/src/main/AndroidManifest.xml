@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.rcudev.myqrscan">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
 
     <application
@@ -23,6 +24,7 @@
         <activity
             android:name=".view.MyQRScanSplashActivity"
             android:exported="true"
+            android:hardwareAccelerated="true"
             android:label="@string/app_name"
             android:theme="@style/MyQRScanSplashTheme">
             <intent-filter>

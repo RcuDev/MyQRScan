@@ -12,7 +12,10 @@ import com.rcudev.myqrscan.data.local.model.QRItem
 import com.rcudev.myqrscan.view.qrList.QRListViewModel
 
 @Composable
-fun QRDeleteDialog(viewModel: QRListViewModel, qrToDelete: QRItem) {
+fun QRDeleteDialog(
+    viewModel: QRListViewModel,
+    qrToDelete: QRItem
+) {
     val state = viewModel.state.value
 
     if (state.showDeleteDialog.value) {

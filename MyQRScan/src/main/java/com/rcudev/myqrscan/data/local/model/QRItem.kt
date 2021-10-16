@@ -9,5 +9,6 @@ data class QRItem(
     @PrimaryKey(autoGenerate = true)
     val pk: Int? = 0,
     var name: String? = null,
-    val url: String? = null
+    val url: String? = null,
+    val category: String? = "Recent"
 ) : Serializable

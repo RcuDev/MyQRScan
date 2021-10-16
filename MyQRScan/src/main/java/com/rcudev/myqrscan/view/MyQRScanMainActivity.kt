@@ -8,10 +8,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.RequestConfiguration
-import com.google.android.gms.ads.admanager.AdManagerAdRequest
 import com.google.zxing.integration.android.IntentIntegrator
 import com.rcudev.myqrscan.R
 import com.rcudev.myqrscan.data.local.model.QRItem
@@ -56,13 +55,7 @@ class MyQRScanMainActivity : AppCompatActivity() {
     private fun initAdMob() {
         bannerAdView = findViewById(R.id.myqrscan_admob_banner)
         MobileAds.initialize(this) { }
-        MobileAds.setRequestConfiguration(
-            RequestConfiguration.Builder()
-                .setTagForChildDirectedTreatment(RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE)
-                .setMaxAdContentRating(RequestConfiguration.MAX_AD_CONTENT_RATING_G)
-                .build()
-        )
-        val adRequest = AdManagerAdRequest.Builder().build()
+        val adRequest = AdRequest.Builder().build()
         bannerAdView.loadAd(adRequest)
     }
 
@@ -71,6 +64,7 @@ class MyQRScanMainActivity : AppCompatActivity() {
 
         if (result != null) {
             if (result.contents != null) {
+                viewModel.selectedCategory.value = "Recent"
                 viewModel.saveQR(QRItem(null, result.contents, result.contents))
             }
         } else {

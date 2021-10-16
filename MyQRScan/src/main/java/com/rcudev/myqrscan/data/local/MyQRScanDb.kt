@@ -6,7 +6,7 @@ import com.rcudev.myqrscan.data.local.model.QRItem
 
 @Database(
     entities = [QRItem::class],
-    version = 1
+    version = 2
 )
 abstract class MyQRScanDb: RoomDatabase() {
     abstract fun composeQRDao(): MyQRScanDao
