@@ -10,5 +10,5 @@ data class QRItem(
     val pk: Int? = 0,
     var name: String? = null,
     val url: String? = null,
-    val category: String? = "Recent"
+    val category: String
 ) : Serializable

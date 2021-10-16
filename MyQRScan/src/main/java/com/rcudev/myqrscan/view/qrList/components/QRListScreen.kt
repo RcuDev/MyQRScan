@@ -45,8 +45,8 @@ fun QRListScreen(
     val state = viewModel.state.value
     val invalidUrlString = stringResource(id = R.string.qr_item_invalid_url)
     val shareQRString = stringResource(id = R.string.qr_item_share_qr_accessibility)
-    var qrToEdit: QRItem by rememberSaveable { mutableStateOf(QRItem()) }
-    var qrToDelete: QRItem by rememberSaveable { mutableStateOf(QRItem()) }
+    var qrToEdit: QRItem by rememberSaveable { mutableStateOf(QRItem(category = "Recent")) }
+    var qrToDelete: QRItem by rememberSaveable { mutableStateOf(QRItem(category = "Recent")) }
 
     Scaffold(
         topBar = {
@@ -131,7 +131,7 @@ fun QRListScreen(
             }
             if (state.error.isNotBlank()) {
                 Text(
-                    text = state.error,
+                    text = stringResource(id = R.string.qr_list_error),
                     color = MaterialTheme.colors.error,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold,

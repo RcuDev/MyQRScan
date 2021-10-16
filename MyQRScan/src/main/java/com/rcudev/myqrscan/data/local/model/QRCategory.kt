@@ -7,5 +7,5 @@ import java.io.Serializable
 @Entity
 class QRCategory(
     @PrimaryKey
-    val categoryName: String? = null
+    val categoryName: String
 ) : Serializable

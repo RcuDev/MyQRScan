@@ -65,7 +65,7 @@ class MyQRScanMainActivity : AppCompatActivity() {
         if (result != null) {
             if (result.contents != null) {
                 viewModel.selectedCategory.value = "Recent"
-                viewModel.saveQR(QRItem(null, result.contents, result.contents))
+                viewModel.saveQR(QRItem(null, result.contents, result.contents, "Recent"))
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data)

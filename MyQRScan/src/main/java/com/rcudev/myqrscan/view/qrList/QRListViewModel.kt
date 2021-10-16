@@ -1,5 +1,6 @@
 package com.rcudev.myqrscan.view.qrList
 
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -72,6 +73,7 @@ class QRListViewModel @Inject constructor(
                 _state.value = QRListState(
                     error = result.message ?: "An unexpected error occured"
                 )
+                Log.e("MYQRSCANNER", state.value.error)
             }
             is TaskState.Loading -> {
                 _state.value = QRListState(isLoading = true)
