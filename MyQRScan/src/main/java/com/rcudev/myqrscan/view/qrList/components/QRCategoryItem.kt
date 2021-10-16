@@ -21,7 +21,6 @@ fun QRCategoryItem(
     onSelectedCategoryChanged: (String) -> Unit
 ) {
     Surface(
-        modifier = Modifier.padding(end = 8.dp),
         elevation = 8.dp,
         shape = CircleShape,
         border = BorderStroke(if (isSelected) 2.dp else 1.dp, Color.Red)

@@ -3,6 +3,7 @@ package com.rcudev.myqrscan.di
 import android.content.Context
 import androidx.room.Room
 import com.rcudev.myqrscan.data.MyQRScanScanRepositoryImpl
+import com.rcudev.myqrscan.data.local.MyQRDbMigrations
 import com.rcudev.myqrscan.data.local.MyQRScanDao
 import com.rcudev.myqrscan.data.local.MyQRScanDb
 import com.rcudev.myqrscan.domain.repository.MyQRScanRepository
@@ -25,7 +26,10 @@ object DataModule {
     @Provides
     @Singleton
     fun provideMyQRScanDb(@ApplicationContext context: Context) =
-        Room.databaseBuilder(context, MyQRScanDb::class.java, "qr").allowMainThreadQueries().build()
+        Room.databaseBuilder(context, MyQRScanDb::class.java, "qr")
+            .addMigrations(MyQRDbMigrations.MIGRATION_1_2)
+            .allowMainThreadQueries()
+            .build()
 
     @Provides
     @Singleton
