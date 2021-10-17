@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.core.content.ContextCompat
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
@@ -82,9 +81,9 @@ class MyQRScanMainActivity : AppCompatActivity() {
 
     private fun initAdMob() {
         bannerAdView = findViewById(R.id.myqrscan_admob_banner)
-        //MobileAds.initialize(this) { }
-        //val adRequest = AdRequest.Builder().build()
-        //bannerAdView.loadAd(adRequest)
+        MobileAds.initialize(this) { }
+        val adRequest = AdRequest.Builder().build()
+        bannerAdView.loadAd(adRequest)
         bannerAdView.adListener = object : AdListener() {
             override fun onAdLoaded() {
                 super.onAdLoaded()

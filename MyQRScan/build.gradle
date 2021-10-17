@@ -46,7 +46,7 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
-        kotlinCompilerVersion '1.5.30'
+        kotlinCompilerVersion '1.5.31'
     }
     packagingOptions {
         resources {

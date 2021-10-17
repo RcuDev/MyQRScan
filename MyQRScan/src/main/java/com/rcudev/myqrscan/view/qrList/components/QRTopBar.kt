@@ -9,13 +9,15 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.rcudev.myqrscan.data.local.model.QRCategory
 import com.rcudev.myqrscan.view.qrList.QRListViewModel
 import com.rcudev.myqrscan.view.qrList.components.listItems.QRCategoryItem
 
 @Composable
 fun QRTopBar(
     recentCategory: String,
-    viewModel: QRListViewModel
+    viewModel: QRListViewModel,
+    onCategoryDeleteClicked: (QRCategory) -> Unit
 ) {
     TopAppBar(
         contentPadding = PaddingValues(0.dp)
@@ -32,7 +34,7 @@ fun QRTopBar(
                         viewModel.getQRListByCategory(it)
                     },
                     onDeleteCategoryClicked = {
-                        viewModel.deleteQRCategory(it)
+                        onCategoryDeleteClicked(it)
                     }
                 )
                 Spacer(modifier = Modifier.padding(end = 4.dp))

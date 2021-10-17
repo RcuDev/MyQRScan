@@ -24,6 +24,7 @@ import com.rcudev.myqrscan.view.qrList.components.QRList
 import com.rcudev.myqrscan.view.qrList.components.QRScanFloatingButton
 import com.rcudev.myqrscan.view.qrList.components.QRTopBar
 import com.rcudev.myqrscan.view.qrList.components.dialogs.QRAddCategoryDialog
+import com.rcudev.myqrscan.view.qrList.components.dialogs.QRCategoryDeleteDialog
 import com.rcudev.myqrscan.view.qrList.components.dialogs.QRDeleteDialog
 import com.rcudev.myqrscan.view.qrList.components.dialogs.QREditDialog
 import kotlinx.coroutines.launch
@@ -43,13 +44,18 @@ fun QRListScreen(
     val invalidUrlString = stringResource(id = R.string.qr_item_invalid_url)
     var qrToEdit: QRItem by rememberSaveable { mutableStateOf(QRItem(category = viewModel.recentCategoryText.value)) }
     var qrToDelete: QRItem by rememberSaveable { mutableStateOf(QRItem(category = viewModel.recentCategoryText.value)) }
+    var qrCategoryToDelete: QRCategory by rememberSaveable { mutableStateOf(QRCategory("")) }
 
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
             QRTopBar(
                 recentCategory = context.resources.getString(R.string.qr_topbar_recent_category),
-                viewModel = viewModel
+                viewModel = viewModel,
+                onCategoryDeleteClicked = {
+                    qrCategoryToDelete = it
+                    state.showDeleteCategoryDialog.value = true
+                }
             )
         },
         bottomBar = { QRBottomBar() },
@@ -138,5 +144,6 @@ fun QRListScreen(
         QREditDialog(viewModel = viewModel, qrToEdit = qrToEdit)
         QRDeleteDialog(viewModel = viewModel, qrToDelete = qrToDelete)
         QRAddCategoryDialog(viewModel = viewModel)
+        QRCategoryDeleteDialog(viewModel = viewModel, qrCategoryToDelete = qrCategoryToDelete)
     }
 }

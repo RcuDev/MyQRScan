@@ -123,7 +123,6 @@ class QRListViewModel @Inject constructor(
                 _state.value = QRListState(
                     error = result.message ?: "An unexpected error occured"
                 )
-                Log.e("MYQRSCANNER", state.value.error)
             }
             is TaskState.Loading -> {
                 _state.value = QRListState(isLoading = true)

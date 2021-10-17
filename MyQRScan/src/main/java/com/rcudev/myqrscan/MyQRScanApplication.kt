@@ -1,7 +1,6 @@
 package com.rcudev.myqrscan
 
 import android.app.Application
-import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import dagger.hilt.android.HiltAndroidApp
 

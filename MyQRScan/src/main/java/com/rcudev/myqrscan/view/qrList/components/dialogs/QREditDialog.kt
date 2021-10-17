@@ -1,7 +1,6 @@
 package com.rcudev.myqrscan.view.qrList.components.dialogs
 
 import android.text.TextUtils
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -19,7 +18,6 @@ import androidx.compose.ui.unit.sp
 import com.rcudev.myqrscan.R
 import com.rcudev.myqrscan.data.local.model.QRItem
 import com.rcudev.myqrscan.view.qrList.QRListViewModel
-import com.rcudev.myqrscan.view.theme.Black1
 import com.rcudev.myqrscan.view.theme.Green600
 import com.rcudev.myqrscan.view.theme.Red600
 
