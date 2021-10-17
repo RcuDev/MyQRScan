@@ -3,6 +3,7 @@ package com.rcudev.myqrscan.view.qrList.components.dialogs
 import android.text.TextUtils
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.AlertDialog
@@ -45,12 +46,14 @@ fun QRAddCategoryDialog(
                 Column {
                     Text(
                         text = stringResource(id = R.string.qr_add_catalog_description),
-                        fontSize = 14.sp
+                        fontSize = 14.sp,
+                        modifier = Modifier.fillMaxWidth()
                     )
                     Spacer(modifier = Modifier.padding(top = 5.dp))
                     TextField(
                         value = newCategory,
                         singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
                         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                         onValueChange = { newCategory = it }
                     )

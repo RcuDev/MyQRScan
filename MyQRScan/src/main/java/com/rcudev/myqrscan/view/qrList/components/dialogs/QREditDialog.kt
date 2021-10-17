@@ -51,12 +51,14 @@ fun QREditDialog(
                 Column {
                     Text(
                         text = stringResource(id = R.string.qr_edit_dialog_description),
-                        fontSize = 14.sp
+                        fontSize = 14.sp,
+                        modifier = Modifier.fillMaxWidth()
                     )
                     Spacer(modifier = Modifier.padding(top = 5.dp))
                     TextField(
                         value = newQrName,
                         singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
                         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                         onValueChange = { newQrName = it }
                     )
