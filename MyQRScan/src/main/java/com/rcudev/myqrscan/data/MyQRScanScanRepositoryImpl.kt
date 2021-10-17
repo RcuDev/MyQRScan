@@ -42,7 +42,7 @@ class MyQRScanScanRepositoryImpl @Inject constructor(private val myQRScanDao: My
     }
 
     override suspend fun deleteQRCategory(categoryToDelete: QRCategory): List<QRCategory> {
-        myQRScanDao.saveNewQRCategory(categoryToDelete)
+        myQRScanDao.deleteQRCategory(categoryToDelete)
         return myQRScanDao.getQRCategoryList()
     }
 

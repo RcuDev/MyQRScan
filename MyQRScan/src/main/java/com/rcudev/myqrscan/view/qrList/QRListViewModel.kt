@@ -28,11 +28,15 @@ class QRListViewModel @Inject constructor(
 
     private val _state = mutableStateOf(QRListState())
     val state: State<QRListState> = _state
+
+    val qrList: MutableState<List<QRItem>> = mutableStateOf(emptyList())
     val selectedCategory: MutableState<QRCategory> = mutableStateOf(QRCategory("Recent"))
+    val qrCategoryList: MutableState<List<QRCategory>> = mutableStateOf(emptyList())
 
     init {
         viewModelScope.launch {
-            getQRListByCategory()
+            getQRListByCategory(QRCategory("Recent"))
+            saveQRCategory(QRCategory("Recent"))
         }
     }
 
@@ -54,8 +58,9 @@ class QRListViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun getQRListByCategory() {
-        getQRListByCategoryUseCase(selectedCategory.value.categoryName).onEach { result ->
+    fun getQRListByCategory(qrCategory: QRCategory) {
+        selectedCategory.value = qrCategory
+        getQRListByCategoryUseCase(qrCategory.categoryName).onEach { result ->
             checkQRResult(result = result)
         }.launchIn(viewModelScope)
     }
@@ -77,11 +82,7 @@ class QRListViewModel @Inject constructor(
     ) {
         when (result) {
             is TaskState.Success -> {
-                _state.value =
-                    QRListState(
-                        qrList = result.data ?: emptyList(),
-                        selectedCategory = selectedCategory.value
-                    )
+                qrList.value = result.data ?: emptyList()
             }
             is TaskState.Error -> {
                 _state.value = QRListState(
@@ -100,11 +101,7 @@ class QRListViewModel @Inject constructor(
     ) {
         when (result) {
             is TaskState.Success -> {
-                _state.value =
-                    QRListState(
-                        qrCategoryList = result.data ?: emptyList(),
-                        selectedCategory = selectedCategory.value
-                    )
+                qrCategoryList.value = result.data ?: emptyList()
             }
             is TaskState.Error -> {
                 _state.value = QRListState(

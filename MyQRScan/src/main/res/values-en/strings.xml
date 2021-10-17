@@ -17,8 +17,8 @@
     <string name="qr_item_delete_qr_accessibility">Delete QR</string>
 
     <!-- Dialog -->
-    <string name="qr_dialog_confirm">✔️ Confirm</string>
-    <string name="qr_dialog_cancel">❌ Cancel</string>
+    <string name="qr_dialog_confirm">Confirm</string>
+    <string name="qr_dialog_cancel">Cancel</string>
 
     <string name="qr_edit_dialog_title">Edit QR</string>
     <string name="qr_edit_dialog_description">Customize QR name ☺️</string>

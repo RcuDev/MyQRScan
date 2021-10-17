@@ -1,4 +1,4 @@
-package com.rcudev.myqrscan.view.qrList.components
+package com.rcudev.myqrscan.view.qrList.components.dialogs
 
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text

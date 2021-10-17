@@ -1,4 +1,4 @@
-package com.rcudev.myqrscan.view.qrList.components
+package com.rcudev.myqrscan.view.qrList.components.dialogs
 
 import android.text.TextUtils
 import androidx.compose.foundation.layout.Column
@@ -61,6 +61,7 @@ fun QRAddCategoryDialog(
                         onClick = {
                             viewModel.saveQRCategory(QRCategory(newCategory))
                             state.showAddCategoryDialog.value = false
+                            newCategory = ""
                         }) {
                         Text(stringResource(id = R.string.qr_dialog_confirm), fontSize = 14.sp)
                     }
@@ -70,6 +71,7 @@ fun QRAddCategoryDialog(
                 TextButton(
                     onClick = {
                         state.showAddCategoryDialog.value = false
+                        newCategory = ""
                     }) {
                     Text(stringResource(id = R.string.qr_dialog_cancel), fontSize = 14.sp)
                 }

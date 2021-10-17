@@ -10,7 +10,6 @@ import com.rcudev.myqrscan.R
 @Composable
 fun QRBottomBar() {
     BottomAppBar(
-        backgroundColor = colorResource(id = R.color.Red900),
         cutoutShape = MaterialTheme.shapes.small.copy(
             CornerSize(percent = 50)
         )

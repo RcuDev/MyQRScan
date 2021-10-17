@@ -21,6 +21,7 @@ import com.rcudev.myqrscan.data.local.model.QRCategory
 
 @Composable
 fun QRCategoryItem(
+    index: Int,
     category: QRCategory,
     isSelected: Boolean = false,
     onSelectedCategoryChanged: (QRCategory) -> Unit,
@@ -29,6 +30,7 @@ fun QRCategoryItem(
     Surface(
         elevation = 8.dp,
         shape = CircleShape,
+        color = Color.White,
         border = BorderStroke(if (isSelected) 2.dp else 1.dp, Color.Red)
     ) {
         Row(
@@ -45,7 +47,8 @@ fun QRCategoryItem(
                 Icon(
                     Icons.Outlined.CheckCircle,
                     contentDescription = null,
-                    modifier = Modifier.padding(start = 8.dp)
+                    modifier = Modifier.padding(start = 8.dp),
+                    tint = Color.Black
                 )
             }
             Text(
@@ -53,17 +56,21 @@ fun QRCategoryItem(
                 fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
                 style = MaterialTheme.typography.body1,
                 color = if (isSelected) Color.Red else Color.Black,
-                modifier = Modifier.padding(start = 8.dp).align(Alignment.CenterVertically)
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .align(Alignment.CenterVertically)
             )
-            IconButton(
-                onClick = {
-                    onDeleteCategoryClicked(category)
-                }, modifier = Modifier
-                    .width(34.dp)
-                    .height(34.dp)
-                    .padding(start = 6.dp, end = 8.dp)
-            ) {
-                Icon(Icons.Outlined.Close, contentDescription = null)
+            if (index == 0) {
+                IconButton(
+                    onClick = {
+                        onDeleteCategoryClicked(category)
+                    }, modifier = Modifier
+                        .width(34.dp)
+                        .height(34.dp)
+                        .padding(start = 6.dp, end = 8.dp)
+                ) {
+                    Icon(Icons.Outlined.Close, contentDescription = null, tint = Color.Black)
+                }
             }
         }
     }

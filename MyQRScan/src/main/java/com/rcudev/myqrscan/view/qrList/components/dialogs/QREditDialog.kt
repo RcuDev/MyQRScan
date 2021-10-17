@@ -1,4 +1,4 @@
-package com.rcudev.myqrscan.view.qrList.components
+package com.rcudev.myqrscan.view.qrList.components.dialogs
 
 import android.text.TextUtils
 import androidx.compose.foundation.layout.Column
@@ -11,7 +11,6 @@ import androidx.compose.material.TextButton
 import androidx.compose.material.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -21,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import com.rcudev.myqrscan.R
 import com.rcudev.myqrscan.data.local.model.QRItem
 import com.rcudev.myqrscan.view.qrList.QRListViewModel
+import com.rcudev.myqrscan.view.theme.*
 
 @Composable
 fun QREditDialog(viewModel: QRListViewModel, qrToEdit: QRItem) {
@@ -63,7 +63,6 @@ fun QREditDialog(viewModel: QRListViewModel, qrToEdit: QRItem) {
                             text = this,
                             fontSize = 12.sp,
                             maxLines = 3,
-                            color = Color.DarkGray,
                             fontStyle = FontStyle.Italic
                         )
                     }
@@ -77,7 +76,11 @@ fun QREditDialog(viewModel: QRListViewModel, qrToEdit: QRItem) {
                         viewModel.updateQR(qrToEdit)
                         state.showEditDialog.value = false
                     }) {
-                    Text(stringResource(id = R.string.qr_dialog_confirm), fontSize = 14.sp)
+                    Text(
+                        text = stringResource(id = R.string.qr_dialog_confirm),
+                        fontSize = 14.sp,
+                        color = Green600
+                    )
                 }
             },
             dismissButton = {
@@ -85,7 +88,11 @@ fun QREditDialog(viewModel: QRListViewModel, qrToEdit: QRItem) {
                     onClick = {
                         state.showEditDialog.value = false
                     }) {
-                    Text(stringResource(id = R.string.qr_dialog_cancel), fontSize = 14.sp)
+                    Text(
+                        text = stringResource(id = R.string.qr_dialog_cancel),
+                        fontSize = 14.sp,
+                        color = Red600
+                    )
                 }
             }
         )

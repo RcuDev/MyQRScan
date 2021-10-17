@@ -1,8 +1,7 @@
 package com.rcudev.myqrscan.data.local
 
 import androidx.room.*
-import androidx.room.OnConflictStrategy.ABORT
-import androidx.room.OnConflictStrategy.REPLACE
+import androidx.room.OnConflictStrategy.*
 import com.rcudev.myqrscan.data.local.model.QRCategory
 import com.rcudev.myqrscan.data.local.model.QRItem
 
@@ -32,9 +31,9 @@ interface MyQRScanDao {
     @Query("SELECT * FROM QRCategory")
     fun getQRCategoryList(): List<QRCategory>
 
-    @Insert(onConflict = ABORT)
+    @Insert(onConflict = IGNORE)
     fun saveNewQRCategory(qrCategory: QRCategory)
 
     @Delete
-    fun deleteQR(qrCategory: QRCategory)
+    fun deleteQRCategory(qrCategory: QRCategory)
 }

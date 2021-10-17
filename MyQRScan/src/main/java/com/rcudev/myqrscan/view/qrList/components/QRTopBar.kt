@@ -1,16 +1,14 @@
 package com.rcudev.myqrscan.view.qrList.components
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.rcudev.myqrscan.view.qrList.QRListViewModel
 
@@ -18,24 +16,19 @@ import com.rcudev.myqrscan.view.qrList.QRListViewModel
 fun QRTopBar(
     viewModel: QRListViewModel
 ) {
-    val state = viewModel.state.value
-
     TopAppBar(
-        contentPadding = PaddingValues(0.dp),
-        backgroundColor = Color.White
+        contentPadding = PaddingValues(0.dp)
     ) {
         LazyRow(
-            contentPadding = PaddingValues(start = 8.dp, end = 4.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.weight(1f)
+            contentPadding = PaddingValues(start = 8.dp, end = 4.dp)
         ) {
-            items(state.qrCategoryList) { category ->
+            itemsIndexed(viewModel.qrCategoryList.value) { index ,category ->
                 QRCategoryItem(
+                    index = index,
                     category = category,
-                    isSelected = category == state.selectedCategory,
+                    isSelected = category.categoryName == viewModel.selectedCategory.value.categoryName,
                     onSelectedCategoryChanged = {
-                        viewModel.selectedCategory.value = it
-                        viewModel.getQRListByCategory()
+                        viewModel.getQRListByCategory(it)
                     },
                     onDeleteCategoryClicked = {
                         viewModel.deleteQRCategory(it)

@@ -7,9 +7,6 @@ import com.rcudev.myqrscan.data.local.model.QRItem
 
 data class QRListState(
     val isLoading: Boolean = false,
-    val qrList: List<QRItem> = emptyList(),
-    val qrCategoryList: List<QRCategory> = listOf(QRCategory("Recent")),
-    val selectedCategory: QRCategory = QRCategory("Recent"),
     val error: String = "",
     val showEditDialog: MutableState<Boolean> = mutableStateOf(false),
     val showDeleteDialog: MutableState<Boolean> = mutableStateOf(false),
