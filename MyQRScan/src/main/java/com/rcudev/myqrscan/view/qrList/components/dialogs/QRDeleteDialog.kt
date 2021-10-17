@@ -10,6 +10,8 @@ import androidx.compose.ui.unit.sp
 import com.rcudev.myqrscan.R
 import com.rcudev.myqrscan.data.local.model.QRItem
 import com.rcudev.myqrscan.view.qrList.QRListViewModel
+import com.rcudev.myqrscan.view.theme.Green600
+import com.rcudev.myqrscan.view.theme.Red600
 
 @Composable
 fun QRDeleteDialog(
@@ -42,7 +44,11 @@ fun QRDeleteDialog(
                         viewModel.deleteQR(qrToDelete)
                         state.showDeleteDialog.value = false
                     }) {
-                    Text(stringResource(id = R.string.qr_dialog_confirm), fontSize = 14.sp)
+                    Text(
+                        text = stringResource(id = R.string.qr_dialog_confirm),
+                        fontSize = 14.sp,
+                        color = Green600
+                    )
                 }
             },
             dismissButton = {
@@ -50,7 +56,11 @@ fun QRDeleteDialog(
                     onClick = {
                         state.showDeleteDialog.value = false
                     }) {
-                    Text(stringResource(id = R.string.qr_dialog_cancel), fontSize = 14.sp)
+                    Text(
+                        text = stringResource(id = R.string.qr_dialog_cancel),
+                        fontSize = 14.sp,
+                        color = Red600
+                    )
                 }
             }
         )

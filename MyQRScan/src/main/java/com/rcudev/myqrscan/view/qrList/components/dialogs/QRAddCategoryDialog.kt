@@ -19,6 +19,8 @@ import androidx.compose.ui.unit.sp
 import com.rcudev.myqrscan.R
 import com.rcudev.myqrscan.data.local.model.QRCategory
 import com.rcudev.myqrscan.view.qrList.QRListViewModel
+import com.rcudev.myqrscan.view.theme.Green600
+import com.rcudev.myqrscan.view.theme.Red600
 
 @Composable
 fun QRAddCategoryDialog(
@@ -63,7 +65,11 @@ fun QRAddCategoryDialog(
                             state.showAddCategoryDialog.value = false
                             newCategory = ""
                         }) {
-                        Text(stringResource(id = R.string.qr_dialog_confirm), fontSize = 14.sp)
+                        Text(
+                            text = stringResource(id = R.string.qr_dialog_confirm),
+                            fontSize = 14.sp,
+                            color = Green600
+                        )
                     }
                 }
             },
@@ -73,7 +79,11 @@ fun QRAddCategoryDialog(
                         state.showAddCategoryDialog.value = false
                         newCategory = ""
                     }) {
-                    Text(stringResource(id = R.string.qr_dialog_cancel), fontSize = 14.sp)
+                    Text(
+                        text = stringResource(id = R.string.qr_dialog_cancel),
+                        fontSize = 14.sp,
+                        color = Red600
+                    )
                 }
             }
         )

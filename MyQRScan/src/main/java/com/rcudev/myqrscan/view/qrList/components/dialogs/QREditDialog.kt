@@ -1,15 +1,14 @@
 package com.rcudev.myqrscan.view.qrList.components.dialogs
 
 import android.text.TextUtils
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
-import androidx.compose.material.TextField
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
@@ -20,13 +19,19 @@ import androidx.compose.ui.unit.sp
 import com.rcudev.myqrscan.R
 import com.rcudev.myqrscan.data.local.model.QRItem
 import com.rcudev.myqrscan.view.qrList.QRListViewModel
-import com.rcudev.myqrscan.view.theme.*
+import com.rcudev.myqrscan.view.theme.Black1
+import com.rcudev.myqrscan.view.theme.Green600
+import com.rcudev.myqrscan.view.theme.Red600
 
 @Composable
-fun QREditDialog(viewModel: QRListViewModel, qrToEdit: QRItem) {
+fun QREditDialog(
+    viewModel: QRListViewModel,
+    qrToEdit: QRItem
+) {
     val state = viewModel.state.value
     val emptyNameString = stringResource(id = R.string.qr_item_empty_name)
     var newQrName by remember { mutableStateOf("") }
+    var expanded by remember { mutableStateOf(false) }
 
     qrToEdit.let {
         newQrName = if (qrToEdit.name.equals(qrToEdit.url)) "" else qrToEdit.name ?: ""
@@ -65,6 +70,34 @@ fun QREditDialog(viewModel: QRListViewModel, qrToEdit: QRItem) {
                             maxLines = 3,
                             fontStyle = FontStyle.Italic
                         )
+                    }
+                    Spacer(modifier = Modifier.padding(top = 10.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = qrToEdit.category, fontSize = 20.sp,
+                            modifier = Modifier.weight(1f)
+                        )
+                        IconButton(onClick = {
+                            expanded = true
+                        }) {
+                            Icon(Icons.Default.ArrowDropDown, contentDescription = null)
+                        }
+                        DropdownMenu(
+                            expanded = expanded,
+                            onDismissRequest = { expanded = false }
+                        ) {
+                            viewModel.qrCategoryList.value.forEach { qrCategory ->
+                                DropdownMenuItem(onClick = {
+                                    qrToEdit.category = qrCategory.categoryName
+                                    expanded = false
+                                }) {
+                                    Text(text = qrCategory.categoryName)
+                                }
+                            }
+                        }
                     }
                 }
             },

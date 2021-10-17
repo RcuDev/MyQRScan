@@ -34,7 +34,7 @@ fun QRList(
 
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(5.dp),
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp)
+        contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 32.dp)
     ) {
         items(viewModel.qrList.value.reversed()) { qrItem ->
             Spacer(

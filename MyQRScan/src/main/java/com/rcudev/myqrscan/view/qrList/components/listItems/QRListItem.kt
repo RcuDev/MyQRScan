@@ -61,7 +61,7 @@ fun RecentScanItem(
                 IconButton(onClick = {
                     expanded = true
                 }) {
-                    Icon(Icons.Default.Menu, contentDescription = "Localized description")
+                    Icon(Icons.Default.Menu, contentDescription = null)
                 }
                 DropdownMenu(
                     expanded = expanded,

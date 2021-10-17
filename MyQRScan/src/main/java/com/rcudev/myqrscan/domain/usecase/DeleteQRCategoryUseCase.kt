@@ -9,10 +9,10 @@ import kotlinx.coroutines.flow.flow
 class DeleteQRCategoryUseCase(
     private val scanRepository: MyQRScanRepository
 ) {
-    operator fun invoke(categoryToDelete: QRCategory): Flow<TaskState<List<QRCategory>>> = flow {
+    operator fun invoke(categoryToDelete: QRCategory, categoryToMoveAllQR: QRCategory): Flow<TaskState<List<QRCategory>>> = flow {
         try {
             emit(TaskState.Loading())
-            val saveSuccess = scanRepository.deleteQRCategory(categoryToDelete)
+            val saveSuccess = scanRepository.deleteQRCategory(categoryToDelete, categoryToMoveAllQR)
             emit(TaskState.Success(saveSuccess))
         } catch (e: Exception) {
             emit(

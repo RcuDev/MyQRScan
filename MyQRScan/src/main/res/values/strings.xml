@@ -5,9 +5,10 @@
     <string name="qr_topbar_recent_category">Recientes</string>
 
     <!-- QR List -->
-    <string name="qr_list_help_text">Todos los QR leídos se guardarán automáticamente y podrás volver a acceder a ellos sin necesidad de usar la cámara 😄 \n\n
-        Se puede modificar el nombre del QR guardado para identificarlo fácilmente, y también compartirlo con quien quieras 🤩 \n\n
-    Próximamente se podrán añadir categorías como restaurantes, tiendas y mucho más, así tendrás todos los enlaces ordenados 🥰</string>
+    <string name="qr_list_help_text">Todos los QR leídos se guardarán automáticamente en esta categoría 😄 \n\n
+        Modifica el nombre o categoría del QR y añade nuevas categorías 🤩</string>
+    <string name="qr_list_category_empty">Categoría vacía 😱 \n\n
+        Modifica la categoría del QR 🥰</string>
     <string name="qr_list_error">Ha ocurrido un error 😰</string>
     <string name="qr_list_scan">Escanear</string>
 

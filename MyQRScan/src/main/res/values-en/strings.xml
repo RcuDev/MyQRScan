@@ -7,8 +7,9 @@
 
     <!-- QR List -->
     <string name="qr_list_help_text">All the QRs read will be saved automatically and you can access them again without using the camera 😄 \n\n
-        You can modify the name of the saved QR to easily identify it, and also share it with whoever you want 🤩 \n\n
-    Categories such as restaurants, shops and much more will be added soon, so you will have all the links ordered 🥰</string>
+        Modify the name or category of the QR and add new categories</string>
+    <string name="qr_list_category_empty">Empty Category 😱 \n\n
+        Modify the category of the QR 🥰</string>
     <string name="qr_list_error">An error has occurred 😰</string>
     <string name="qr_list_scan">Scan</string>
 

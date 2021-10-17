@@ -9,5 +9,5 @@ interface MyQRScanRepository {
     suspend fun updateQR(qrToUpdate: QRItem): List<QRItem>
     suspend fun deleteQR(qrToDelete: QRItem): List<QRItem>
     suspend fun saveQRCategory(categoryToSave: QRCategory): List<QRCategory>
-    suspend fun deleteQRCategory(categoryToDelete: QRCategory): List<QRCategory>
+    suspend fun deleteQRCategory(categoryToDelete: QRCategory, categoryToMoveAllQR: QRCategory): List<QRCategory>
 }

@@ -29,14 +29,15 @@ class QRListViewModel @Inject constructor(
     private val _state = mutableStateOf(QRListState())
     val state: State<QRListState> = _state
 
-    val recentCategoryValue: MutableState<String> = mutableStateOf("")
+    val recentCategoryText: MutableState<String> = mutableStateOf("")
     val qrList: MutableState<List<QRItem>> = mutableStateOf(emptyList())
-    val selectedCategory: MutableState<QRCategory> = mutableStateOf(QRCategory(recentCategoryValue.value))
+    val selectedCategory: MutableState<QRCategory> =
+        mutableStateOf(QRCategory(recentCategoryText.value))
     val qrCategoryList: MutableState<List<QRCategory>> = mutableStateOf(emptyList())
 
     fun initViewModel(recentCategory: QRCategory) {
         viewModelScope.launch {
-            recentCategoryValue.value = recentCategory.categoryName
+            recentCategoryText.value = recentCategory.categoryName
             selectedCategory.value = recentCategory
             saveQRCategory(recentCategory)
             getQRListByCategory(QRCategory(recentCategory.categoryName))
@@ -53,6 +54,7 @@ class QRListViewModel @Inject constructor(
         updateUseCase(qrToUpdate).onEach { result ->
             checkQRResult(result = result)
         }.launchIn(viewModelScope)
+        getQRListByCategory(selectedCategory.value, false)
     }
 
     fun deleteQR(qrToDelete: QRItem) {
@@ -61,8 +63,11 @@ class QRListViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun getQRListByCategory(qrCategory: QRCategory) {
-        selectedCategory.value = qrCategory
+    fun getQRListByCategory(qrCategory: QRCategory, updateSelectedCategory: Boolean = true) {
+        if (updateSelectedCategory) {
+            selectedCategory.value = qrCategory
+        }
+
         getQRListByCategoryUseCase(qrCategory.categoryName).onEach { result ->
             checkQRResult(result = result)
         }.launchIn(viewModelScope)
@@ -76,11 +81,16 @@ class QRListViewModel @Inject constructor(
 
     fun deleteQRCategory(categoryToDelete: QRCategory) {
         if (selectedCategory.value.categoryName == categoryToDelete.categoryName) {
-            selectedCategory.value = QRCategory(recentCategoryValue.value)
+            selectedCategory.value = QRCategory(recentCategoryText.value)
+            getQRListByCategory(QRCategory(recentCategoryText.value))
         }
-        deleteQRCategoryUseCase(categoryToDelete).onEach { result ->
+        deleteQRCategoryUseCase(
+            categoryToDelete,
+            QRCategory(recentCategoryText.value)
+        ).onEach { result ->
             checkQRCategoryResult(result = result)
         }.launchIn(viewModelScope)
+        getQRListByCategory(selectedCategory.value, false)
     }
 
     private fun checkQRResult(

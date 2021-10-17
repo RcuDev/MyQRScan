@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rcudev.myqrscan.MyQRScanApplication
 import com.rcudev.myqrscan.R
+import com.rcudev.myqrscan.data.local.model.QRCategory
 import com.rcudev.myqrscan.data.local.model.QRItem
 import com.rcudev.myqrscan.view.qrList.components.QRBottomBar
 import com.rcudev.myqrscan.view.qrList.components.QRList
@@ -40,8 +41,8 @@ fun QRListScreen(
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
     val invalidUrlString = stringResource(id = R.string.qr_item_invalid_url)
-    var qrToEdit: QRItem by rememberSaveable { mutableStateOf(QRItem(category = viewModel.recentCategoryValue.value)) }
-    var qrToDelete: QRItem by rememberSaveable { mutableStateOf(QRItem(category = viewModel.recentCategoryValue.value)) }
+    var qrToEdit: QRItem by rememberSaveable { mutableStateOf(QRItem(category = viewModel.recentCategoryText.value)) }
+    var qrToDelete: QRItem by rememberSaveable { mutableStateOf(QRItem(category = viewModel.recentCategoryText.value)) }
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -64,10 +65,11 @@ fun QRListScreen(
         },
         floatingActionButtonPosition = FabPosition.Center,
         isFloatingActionButtonDocked = true
-    ) {
+    ) { innerPadding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(innerPadding)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.app_icon_splash),
@@ -118,7 +120,10 @@ fun QRListScreen(
                 )
             } else if (viewModel.qrList.value.isEmpty()) {
                 Text(
-                    text = stringResource(id = R.string.qr_list_help_text),
+                    text = stringResource(
+                        id = if (viewModel.selectedCategory.value.categoryName == viewModel.recentCategoryText.value)
+                            R.string.qr_list_help_text else R.string.qr_list_category_empty
+                    ),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,

@@ -36,4 +36,7 @@ interface MyQRScanDao {
 
     @Delete
     fun deleteQRCategory(qrCategory: QRCategory)
+
+    @Query("UPDATE QRItem SET category = :recentCategory WHERE category LIKE :deletedCategory")
+    fun moveQRToRecentCategory(deletedCategory: String, recentCategory: String)
 }
