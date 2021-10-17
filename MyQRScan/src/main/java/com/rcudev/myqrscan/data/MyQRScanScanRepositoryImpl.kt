@@ -1,6 +1,7 @@
 package com.rcudev.myqrscan.data
 
 import com.rcudev.myqrscan.data.local.MyQRScanDao
+import com.rcudev.myqrscan.data.local.model.QRCategory
 import com.rcudev.myqrscan.data.local.model.QRItem
 import com.rcudev.myqrscan.domain.repository.MyQRScanRepository
 import javax.inject.Inject
@@ -8,23 +9,41 @@ import javax.inject.Inject
 class MyQRScanScanRepositoryImpl @Inject constructor(private val myQRScanDao: MyQRScanDao) :
     MyQRScanRepository {
 
-    override suspend fun getQRList() = myQRScanDao.getQRItemList()
+    /**
+     * QR Items
+     */
 
-    override suspend fun getQRListByCategory(category: String) = myQRScanDao.getQRListByCategory(category)
+    override suspend fun getQRListByCategory(category: String) =
+        myQRScanDao.getQRListByCategory(category)
 
     override suspend fun saveNewQR(qrToSave: QRItem): List<QRItem> {
-        myQRScanDao.saveNewQR(qrItem = qrToSave)
-        return myQRScanDao.getQRItemList()
+        myQRScanDao.saveNewQR(qrToSave)
+        return myQRScanDao.getQRListByCategory(qrToSave.category)
     }
 
     override suspend fun updateQR(qrToUpdate: QRItem): List<QRItem> {
-        myQRScanDao.updateQRItem(qrItem = qrToUpdate)
-        return myQRScanDao.getQRItemList()
+        myQRScanDao.updateQRItem(qrToUpdate)
+        return myQRScanDao.getQRListByCategory(qrToUpdate.category)
     }
 
     override suspend fun deleteQR(qrToDelete: QRItem): List<QRItem> {
-        myQRScanDao.deleteQR(qrItem = qrToDelete)
-        return myQRScanDao.getQRItemList()
+        val category: String = qrToDelete.category
+        myQRScanDao.deleteQR(qrToDelete)
+        return myQRScanDao.getQRListByCategory(category)
+    }
+
+    /**
+     * QR Category
+     */
+
+    override suspend fun saveQRCategory(categoryToSave: QRCategory): List<QRCategory> {
+        myQRScanDao.saveNewQRCategory(categoryToSave)
+        return myQRScanDao.getQRCategoryList()
+    }
+
+    override suspend fun deleteQRCategory(categoryToDelete: QRCategory): List<QRCategory> {
+        myQRScanDao.saveNewQRCategory(categoryToDelete)
+        return myQRScanDao.getQRCategoryList()
     }
 
 }

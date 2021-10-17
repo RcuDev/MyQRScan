@@ -6,13 +6,13 @@ import com.rcudev.myqrscan.domain.repository.MyQRScanRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class SaveQRCategoryUseCase(
+class DeleteQRCategoryUseCase(
     private val scanRepository: MyQRScanRepository
 ) {
-    operator fun invoke(categoryToSave: QRCategory): Flow<TaskState<List<QRCategory>>> = flow {
+    operator fun invoke(categoryToDelete: QRCategory): Flow<TaskState<List<QRCategory>>> = flow {
         try {
             emit(TaskState.Loading())
-            val saveSuccess = scanRepository.saveQRCategory(categoryToSave)
+            val saveSuccess = scanRepository.deleteQRCategory(categoryToDelete)
             emit(TaskState.Success(saveSuccess))
         } catch (e: Exception) {
             emit(

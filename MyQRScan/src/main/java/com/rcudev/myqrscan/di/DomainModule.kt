@@ -12,10 +12,6 @@ import dagger.hilt.components.SingletonComponent
 object DomainModule {
 
     @Provides
-    fun provideGetQRListUseCase(scanRepository: MyQRScanRepository) =
-        GetQRListUseCase(scanRepository)
-
-    @Provides
     fun provideGetQRListByCategoryUseCase(scanRepository: MyQRScanRepository) =
         GetQRListByCategoryUseCase(scanRepository)
 
@@ -27,4 +23,12 @@ object DomainModule {
 
     @Provides
     fun provideDeleteQRUseCase(scanRepository: MyQRScanRepository) = DeleteQRUseCase(scanRepository)
+
+    @Provides
+    fun provideSaveQRCategoryUseCase(scanRepository: MyQRScanRepository) =
+        SaveQRCategoryUseCase(scanRepository)
+
+    @Provides
+    fun provideDeleteQRCategoryUseCase(scanRepository: MyQRScanRepository) =
+        DeleteQRCategoryUseCase(scanRepository)
 }

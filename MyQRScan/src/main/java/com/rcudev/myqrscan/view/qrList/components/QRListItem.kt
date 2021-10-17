@@ -44,7 +44,7 @@ fun RecentScanItem(
                 text = qrItem.name ?: stringResource(id = R.string.qr_item_empty_name),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                fontSize = 16.sp,
+                style = MaterialTheme.typography.body1,
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier
                     .weight(1f)

@@ -4,21 +4,14 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.webkit.URLUtil
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -34,6 +27,7 @@ import androidx.core.content.ContextCompat.startActivity
 import com.rcudev.myqrscan.R
 import com.rcudev.myqrscan.data.local.model.QRItem
 import com.rcudev.myqrscan.view.qrList.QRListViewModel
+import kotlinx.coroutines.launch
 
 const val SHARE_QR_TYPE = "text/plain"
 
@@ -43,24 +37,30 @@ fun QRListScreen(
     viewModel: QRListViewModel
 ) {
     val state = viewModel.state.value
+    val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
     val invalidUrlString = stringResource(id = R.string.qr_item_invalid_url)
     val shareQRString = stringResource(id = R.string.qr_item_share_qr_accessibility)
     var qrToEdit: QRItem by rememberSaveable { mutableStateOf(QRItem(category = "Recent")) }
     var qrToDelete: QRItem by rememberSaveable { mutableStateOf(QRItem(category = "Recent")) }
 
     Scaffold(
+        scaffoldState = scaffoldState,
         topBar = {
             QRTopBar(
                 viewModel = viewModel
             )
         },
-        bottomBar = {
-            QRBottomBar(
+        bottomBar = { QRBottomBar() },
+        floatingActionButton = {
+            QRScanFloatingButton(
                 context = context,
-                viewModel = viewModel
+                onAddQRCategoryClick = {
+                    state.showAddCategoryDialog.value = true
+                }
             )
         },
-        floatingActionButton = { QRScanFloatingButton(context = context) },
+        floatingActionButtonPosition = FabPosition.Center,
         isFloatingActionButtonDocked = true
     ) {
         Box(
@@ -101,12 +101,12 @@ fun QRListScreen(
                                         openURL.data = Uri.parse(qrItem.url)
                                         startActivity(context, openURL, null)
                                     } else {
-                                        Toast.makeText(
-                                            context,
-                                            invalidUrlString,
-                                            Toast.LENGTH_SHORT
-                                        )
-                                            .show()
+                                        scope.launch {
+                                            scaffoldState.snackbarHostState
+                                                .showSnackbar(
+                                                    message = invalidUrlString
+                                                )
+                                        }
                                     }
                                 },
                                 onEditQRClick = {
@@ -161,5 +161,6 @@ fun QRListScreen(
 
         QREditDialog(viewModel = viewModel, qrToEdit = qrToEdit)
         QRDeleteDialog(viewModel = viewModel, qrToDelete = qrToDelete)
+        QRAddCategoryDialog(viewModel = viewModel)
     }
 }

@@ -29,33 +29,20 @@ fun QRTopBar(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.weight(1f)
         ) {
-            items(state.categoryList) { category ->
+            items(state.qrCategoryList) { category ->
                 QRCategoryItem(
                     category = category,
                     isSelected = category == state.selectedCategory,
                     onSelectedCategoryChanged = {
                         viewModel.selectedCategory.value = it
                         viewModel.getQRListByCategory()
+                    },
+                    onDeleteCategoryClicked = {
+                        viewModel.deleteQRCategory(it)
                     }
                 )
                 Spacer(modifier = Modifier.padding(end = 4.dp))
             }
-        }
-        Divider(
-            modifier = Modifier
-                .fillMaxHeight()
-                .width(1.dp),
-            color = Color.Black
-        )
-        OutlinedButton(
-            modifier = Modifier.padding(start = 8.dp, end = 8.dp),
-            onClick = { },
-            shape = CircleShape,
-            border = BorderStroke(2.dp, Color.Red),
-            contentPadding = PaddingValues(8.dp),
-            colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Black),
-        ) {
-            Icon(Icons.Default.Add, contentDescription = null)
         }
     }
 }

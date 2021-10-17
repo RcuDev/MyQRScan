@@ -13,6 +13,7 @@ import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.google.zxing.integration.android.IntentIntegrator
 import com.rcudev.myqrscan.R
+import com.rcudev.myqrscan.data.local.model.QRCategory
 import com.rcudev.myqrscan.data.local.model.QRItem
 import com.rcudev.myqrscan.view.qrList.QRListViewModel
 import com.rcudev.myqrscan.view.qrList.components.QRListScreen
@@ -64,7 +65,7 @@ class MyQRScanMainActivity : AppCompatActivity() {
 
         if (result != null) {
             if (result.contents != null) {
-                viewModel.selectedCategory.value = "Recent"
+                viewModel.selectedCategory.value = QRCategory("Recent")
                 viewModel.saveQR(QRItem(null, result.contents, result.contents, "Recent"))
             }
         } else {

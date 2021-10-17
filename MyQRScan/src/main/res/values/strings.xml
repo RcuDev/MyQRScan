@@ -23,5 +23,7 @@
     <string name="qr_edit_dialog_description">Personaliza el nombre del QR ☺️</string>
     <string name="qr_delete_dialog_title">Eliminar QR</string>
     <string name="qr_delete_dialog_description">¿Quieres eliminar este QR de la lista? 😭</string>
+    <string name="qr_add_catalog_title">Nueva Categoría</string>
+    <string name="qr_add_catalog_description">Pon el nombre de la nueva categoría ☺️</string>
 
 </resources>
