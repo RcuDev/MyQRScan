@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">MyQRScan</string>
 
+    <!-- QR Topbar -->
+    <string name="qr_topbar_recent_category">Recientes</string>
+
     <!-- QR List -->
     <string name="qr_list_help_text">Todos los QR leídos se guardarán automáticamente y podrás volver a acceder a ellos sin necesidad de usar la cámara 😄 \n\n
         Se puede modificar el nombre del QR guardado para identificarlo fácilmente, y también compartirlo con quien quieras 🤩 \n\n

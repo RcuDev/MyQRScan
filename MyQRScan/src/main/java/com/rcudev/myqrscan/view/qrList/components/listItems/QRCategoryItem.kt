@@ -1,4 +1,4 @@
-package com.rcudev.myqrscan.view.qrList.components
+package com.rcudev.myqrscan.view.qrList.components.listItems
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Row
@@ -21,7 +21,7 @@ import com.rcudev.myqrscan.data.local.model.QRCategory
 
 @Composable
 fun QRCategoryItem(
-    index: Int,
+    recentCategory: String,
     category: QRCategory,
     isSelected: Boolean = false,
     onSelectedCategoryChanged: (QRCategory) -> Unit,
@@ -57,17 +57,17 @@ fun QRCategoryItem(
                 style = MaterialTheme.typography.body1,
                 color = if (isSelected) Color.Red else Color.Black,
                 modifier = Modifier
-                    .padding(start = 8.dp)
+                    .padding(start = 8.dp, end = 8.dp)
                     .align(Alignment.CenterVertically)
             )
-            if (index == 0) {
+            if (category.categoryName != recentCategory) {
                 IconButton(
                     onClick = {
                         onDeleteCategoryClicked(category)
                     }, modifier = Modifier
                         .width(34.dp)
                         .height(34.dp)
-                        .padding(start = 6.dp, end = 8.dp)
+                        .padding(end = 8.dp)
                 ) {
                     Icon(Icons.Outlined.Close, contentDescription = null, tint = Color.Black)
                 }

@@ -1,4 +1,4 @@
-package com.rcudev.myqrscan.view.qrList.components
+package com.rcudev.myqrscan.view.qrList.components.listItems
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

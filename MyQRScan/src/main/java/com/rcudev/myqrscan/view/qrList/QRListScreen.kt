@@ -40,13 +40,14 @@ fun QRListScreen(
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
     val invalidUrlString = stringResource(id = R.string.qr_item_invalid_url)
-    var qrToEdit: QRItem by rememberSaveable { mutableStateOf(QRItem(category = "Recent")) }
-    var qrToDelete: QRItem by rememberSaveable { mutableStateOf(QRItem(category = "Recent")) }
+    var qrToEdit: QRItem by rememberSaveable { mutableStateOf(QRItem(category = viewModel.recentCategoryValue.value)) }
+    var qrToDelete: QRItem by rememberSaveable { mutableStateOf(QRItem(category = viewModel.recentCategoryValue.value)) }
 
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
             QRTopBar(
+                recentCategory = context.resources.getString(R.string.qr_topbar_recent_category),
                 viewModel = viewModel
             )
         },

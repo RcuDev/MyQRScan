@@ -29,14 +29,17 @@ class QRListViewModel @Inject constructor(
     private val _state = mutableStateOf(QRListState())
     val state: State<QRListState> = _state
 
+    val recentCategoryValue: MutableState<String> = mutableStateOf("")
     val qrList: MutableState<List<QRItem>> = mutableStateOf(emptyList())
-    val selectedCategory: MutableState<QRCategory> = mutableStateOf(QRCategory("Recent"))
+    val selectedCategory: MutableState<QRCategory> = mutableStateOf(QRCategory(recentCategoryValue.value))
     val qrCategoryList: MutableState<List<QRCategory>> = mutableStateOf(emptyList())
 
-    init {
+    fun initViewModel(recentCategory: QRCategory) {
         viewModelScope.launch {
-            getQRListByCategory(QRCategory("Recent"))
-            saveQRCategory(QRCategory("Recent"))
+            recentCategoryValue.value = recentCategory.categoryName
+            selectedCategory.value = recentCategory
+            saveQRCategory(recentCategory)
+            getQRListByCategory(QRCategory(recentCategory.categoryName))
         }
     }
 
@@ -72,6 +75,9 @@ class QRListViewModel @Inject constructor(
     }
 
     fun deleteQRCategory(categoryToDelete: QRCategory) {
+        if (selectedCategory.value.categoryName == categoryToDelete.categoryName) {
+            selectedCategory.value = QRCategory(recentCategoryValue.value)
+        }
         deleteQRCategoryUseCase(categoryToDelete).onEach { result ->
             checkQRCategoryResult(result = result)
         }.launchIn(viewModelScope)

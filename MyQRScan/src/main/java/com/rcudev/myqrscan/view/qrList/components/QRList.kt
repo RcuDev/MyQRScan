@@ -20,6 +20,7 @@ import com.rcudev.myqrscan.R
 import com.rcudev.myqrscan.data.local.model.QRItem
 import com.rcudev.myqrscan.view.qrList.QRListViewModel
 import com.rcudev.myqrscan.view.qrList.SHARE_QR_TYPE
+import com.rcudev.myqrscan.view.qrList.components.listItems.RecentScanItem
 
 @Composable
 fun QRList(
