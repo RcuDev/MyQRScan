@@ -13,8 +13,16 @@ class MyQRScanScanRepositoryImpl @Inject constructor(private val myQRScanDao: My
      * QR Items
      */
 
-    override suspend fun getQRListByCategory(category: String) =
-        myQRScanDao.getQRListByCategory(category)
+    override suspend fun getQRListByCategory(category: String): List<QRItem> {
+        val categoryList = myQRScanDao.getQRListByCategory(category)
+        if (category == "Recientes" && categoryList.isEmpty()) {
+            myQRScanDao.moveQRToRecentCategory(
+                "Recent",
+                category
+            )
+        }
+        return myQRScanDao.getQRListByCategory(category)
+    }
 
     override suspend fun saveNewQR(qrToSave: QRItem): List<QRItem> {
         myQRScanDao.saveNewQR(qrToSave)
