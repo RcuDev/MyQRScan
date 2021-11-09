@@ -3,7 +3,7 @@ package com.rcudev.myqrscan.view.qrList.components
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import android.webkit.URLUtil
+import android.util.Patterns
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -20,7 +20,7 @@ import com.rcudev.myqrscan.R
 import com.rcudev.myqrscan.data.local.model.QRItem
 import com.rcudev.myqrscan.view.qrList.QRListViewModel
 import com.rcudev.myqrscan.view.qrList.SHARE_QR_TYPE
-import com.rcudev.myqrscan.view.qrList.components.listItems.RecentScanItem
+import com.rcudev.myqrscan.view.qrList.components.listItems.QRListItem
 
 @Composable
 fun QRList(
@@ -41,14 +41,23 @@ fun QRList(
                 modifier = Modifier
                     .height(5.dp)
             )
-            RecentScanItem(
+            QRListItem(
                 qrItem = qrItem,
                 onCardClick = {
-                    if (URLUtil.isValidUrl(qrItem.url)) {
-                        val openURL = Intent(Intent.ACTION_VIEW)
-                        openURL.data = Uri.parse(qrItem.url)
-                        ContextCompat.startActivity(context, openURL, null)
-                    } else {
+                    try {
+                        if (Patterns.WEB_URL.matcher(qrItem.url ?: "").matches()) {
+                            var urlToOpen = qrItem.url
+                            if (urlToOpen?.contains("http://") == false || urlToOpen?.contains("http://") == false) {
+                                urlToOpen = "http://${urlToOpen}"
+                            }
+
+                            val openURL = Intent(Intent.ACTION_VIEW)
+                            openURL.data = Uri.parse(urlToOpen)
+                            ContextCompat.startActivity(context, openURL, null)
+                        } else {
+                            onOpenUrlFailed()
+                        }
+                    } catch (e: Exception) {
                         onOpenUrlFailed()
                     }
                 },

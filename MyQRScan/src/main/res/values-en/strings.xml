@@ -6,31 +6,31 @@
     <string name="qr_topbar_recent_category">Recent</string>
 
     <!-- QR List -->
-    <string name="qr_list_help_text">All the QRs read will be saved automatically and you can access them again without using the camera 😄 \n\n
-        Modify the name or category of the QR and add new categories</string>
-    <string name="qr_list_category_empty">Empty Category 😱 \n\n
-        Modify the category of the QR 🥰</string>
-    <string name="qr_list_error">An error has occurred 😰</string>
+    <string name="qr_list_help_text">All the QRs read will be saved automatically and you can access them again without using the camera. \n\n
+        Modify the name or category of the QR and add new categories.</string>
+    <string name="qr_list_category_empty">Empty Category. \n\n
+        Modify the category of the QR.</string>
+    <string name="qr_list_error">An error has occurred!</string>
     <string name="qr_list_scan">Scan</string>
 
     <!-- QR Item -->
-    <string name="qr_item_empty_name">Unnamed QR 😱</string>
-    <string name="qr_item_invalid_url">Can\'t open link 🥺</string>
-    <string name="qr_item_edit_qr_accessibility">Edit QR name</string>
-    <string name="qr_item_share_qr_accessibility">Share QR</string>
-    <string name="qr_item_delete_qr_accessibility">Delete QR</string>
+    <string name="qr_item_empty_name">Unnamed QR.</string>
+    <string name="qr_item_invalid_url">Can\'t open link.</string>
+    <string name="qr_item_edit_qr_accessibility">Edit QR name.</string>
+    <string name="qr_item_share_qr_accessibility">Share QR.</string>
+    <string name="qr_item_delete_qr_accessibility">Delete QR.</string>
 
     <!-- Dialog -->
     <string name="qr_dialog_confirm">Confirm</string>
     <string name="qr_dialog_cancel">Cancel</string>
 
     <string name="qr_edit_dialog_title">Edit QR</string>
-    <string name="qr_edit_dialog_description">Customize QR name ☺️</string>
+    <string name="qr_edit_dialog_description">Customize QR name.</string>
     <string name="qr_delete_dialog_title">Delete QR</string>
-    <string name="qr_delete_dialog_description">Do you want to remove this QR from the list? 😭</string>
+    <string name="qr_delete_dialog_description">Do you want to remove this QR from the list?</string>
     <string name="qr_category_delete_dialog_title">Delete Category</string>
-    <string name="qr_category_delete_dialog_description">All QRs will go to the Recent list 😉</string>
+    <string name="qr_category_delete_dialog_description">All QRs will go to the Recent list.</string>
     <string name="qr_add_catalog_title">New Category</string>
-    <string name="qr_add_catalog_description">Put the name of the new category ☺️</string>
+    <string name="qr_add_catalog_description">Put the name of the new category.</string>
 
 </resources>

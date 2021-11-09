@@ -4,17 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.View.VISIBLE
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ComposeView
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
 import com.google.zxing.integration.android.IntentIntegrator
 import com.rcudev.myqrscan.MyQRScanApplication
 import com.rcudev.myqrscan.R
@@ -27,25 +22,23 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MyQRScanMainActivity : AppCompatActivity() {
+class MyQRScanMainActivity : ComponentActivity() {
 
     private val viewModel: QRListViewModel by viewModels()
 
     private lateinit var sharedPref: SharedPreferences
-    private lateinit var bannerAdView: AdView
 
     @Inject
     lateinit var application: MyQRScanApplication
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_my_qr_scan_main)
 
         sharedPref = this.getSharedPreferences("THEME_MODE", Context.MODE_PRIVATE)
         application.isDarkTheme.value = sharedPref.getBoolean("DARK_THEME_VALUE", false)
         viewModel.initViewModel(QRCategory(resources.getString(R.string.qr_topbar_recent_category)))
 
-        findViewById<ComposeView>(R.id.myqrscan_compose_container).setContent {
+        setContent {
             MyQRScanTheme(
                 darkTheme = application.isDarkTheme.value
             ) {
@@ -58,36 +51,6 @@ class MyQRScanMainActivity : AppCompatActivity() {
                             }
                         })
                 }
-            }
-        }
-
-        initAdMob()
-    }
-
-    public override fun onPause() {
-        bannerAdView.pause()
-        super.onPause()
-    }
-
-    public override fun onResume() {
-        super.onResume()
-        bannerAdView.resume()
-    }
-
-    public override fun onDestroy() {
-        bannerAdView.destroy()
-        super.onDestroy()
-    }
-
-    private fun initAdMob() {
-        bannerAdView = findViewById(R.id.myqrscan_admob_banner)
-        MobileAds.initialize(this) { }
-        val adRequest = AdRequest.Builder().build()
-        bannerAdView.loadAd(adRequest)
-        bannerAdView.adListener = object : AdListener() {
-            override fun onAdLoaded() {
-                super.onAdLoaded()
-                bannerAdView.visibility = VISIBLE
             }
         }
     }

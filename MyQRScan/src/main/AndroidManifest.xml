@@ -16,11 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyQRScan">
 
-        <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-8389040971985833~3852919520" />
-
         <activity
             android:name=".view.MyQRScanSplashActivity"
             android:exported="true"

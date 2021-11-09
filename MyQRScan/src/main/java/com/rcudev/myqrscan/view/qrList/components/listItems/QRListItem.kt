@@ -19,7 +19,7 @@ import com.rcudev.myqrscan.R
 import com.rcudev.myqrscan.data.local.model.QRItem
 
 @Composable
-fun RecentScanItem(
+fun QRListItem(
     qrItem: QRItem,
     onCardClick: (QRItem) -> Unit,
     onEditQRClick: () -> Unit,
@@ -33,11 +33,15 @@ fun RecentScanItem(
         shape = CircleShape,
         modifier = Modifier
             .fillMaxWidth()
-            .height(50.dp)
-            .clickable { onCardClick(qrItem) },
+            .height(50.dp),
         elevation = 6.dp
     ) {
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { onCardClick(qrItem) },
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
             Text(
                 text = qrItem.name ?: stringResource(id = R.string.qr_item_empty_name),
                 maxLines = 1,

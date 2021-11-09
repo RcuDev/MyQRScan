@@ -1,15 +1,17 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.MyQRScan" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.MyQRScan" parent="android:Theme.Material.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#F44336</item>
-        <item name="colorPrimaryVariant">#D32F2F</item>
+        <item name="android:colorPrimary">#F44336</item>
+        <item name="android:colorPrimaryDark">#D32F2F</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?android:attr/colorPrimaryDark
+        </item>
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="MyQRScanSplashTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="MyQRScanSplashTheme" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
+
 </resources>
