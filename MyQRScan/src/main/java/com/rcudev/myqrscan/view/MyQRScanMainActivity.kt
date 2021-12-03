@@ -4,11 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.View.VISIBLE
+import androidx.activity.ComponentActivity
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
@@ -24,7 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MyQRScanMainActivity : AppCompatActivity() {
+class MyQRScanMainActivity : ComponentActivity() {
 
     private val viewModel: QRListViewModel by viewModels()
 
@@ -81,6 +84,13 @@ class MyQRScanMainActivity : AppCompatActivity() {
         MobileAds.initialize(this) { }
         val adRequest = AdRequest.Builder().build()
         bannerAdView.loadAd(adRequest)
+        bannerAdView.adListener = object : AdListener() {
+            override fun onAdLoaded() {
+                super.onAdLoaded()
+                bannerAdView.visibility = VISIBLE
+            }
+        }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
