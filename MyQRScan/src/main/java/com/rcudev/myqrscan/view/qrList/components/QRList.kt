@@ -47,7 +47,7 @@ fun QRList(
                     try {
                         if (Patterns.WEB_URL.matcher(qrItem.url ?: "").matches()) {
                             var urlToOpen = qrItem.url
-                            if (urlToOpen?.contains("http://") == false || urlToOpen?.contains("http://") == false) {
+                            if (urlToOpen?.contains("http://") == false && !urlToOpen.contains("https://")) {
                                 urlToOpen = "http://${urlToOpen}"
                             }
 
