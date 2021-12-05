@@ -15,7 +15,6 @@
 
     <!-- QR Item -->
     <string name="qr_item_empty_name">Unnamed QR.</string>
-    <string name="qr_item_invalid_url">Can\'t open link.</string>
     <string name="qr_item_edit_qr_accessibility">Edit QR name.</string>
     <string name="qr_item_share_qr_accessibility">Share QR.</string>
     <string name="qr_item_delete_qr_accessibility">Delete QR.</string>
@@ -23,7 +22,9 @@
     <!-- Dialog -->
     <string name="qr_dialog_confirm">Confirm</string>
     <string name="qr_dialog_cancel">Cancel</string>
+    <string name="qr_dialog_close">Close</string>
 
+    <string name="qr_image_dialog_description">Click on the QR image and share it.</string>
     <string name="qr_edit_dialog_title">Edit QR</string>
     <string name="qr_edit_dialog_description">Customize QR name.</string>
     <string name="qr_delete_dialog_title">Delete QR</string>

@@ -1,11 +1,16 @@
 package com.rcudev.myqrscan.view.qrList
 
 import android.app.Activity
+import android.graphics.Bitmap
+import androidx.activity.result.ActivityResultLauncher
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -15,6 +20,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.zxing.BarcodeFormat
+import com.journeyapps.barcodescanner.BarcodeEncoder
+import com.journeyapps.barcodescanner.ScanOptions
 import com.rcudev.myqrscan.MyQRScanApplication
 import com.rcudev.myqrscan.R
 import com.rcudev.myqrscan.data.local.model.QRCategory
@@ -23,11 +31,7 @@ import com.rcudev.myqrscan.view.qrList.components.QRBottomBar
 import com.rcudev.myqrscan.view.qrList.components.QRList
 import com.rcudev.myqrscan.view.qrList.components.QRScanFloatingButton
 import com.rcudev.myqrscan.view.qrList.components.QRTopBar
-import com.rcudev.myqrscan.view.qrList.components.dialogs.QRAddCategoryDialog
-import com.rcudev.myqrscan.view.qrList.components.dialogs.QRCategoryDeleteDialog
-import com.rcudev.myqrscan.view.qrList.components.dialogs.QRDeleteDialog
-import com.rcudev.myqrscan.view.qrList.components.dialogs.QREditDialog
-import kotlinx.coroutines.launch
+import com.rcudev.myqrscan.view.qrList.components.dialogs.*
 
 const val SHARE_QR_TYPE = "text/plain"
 
@@ -36,12 +40,13 @@ fun QRListScreen(
     application: MyQRScanApplication,
     context: Activity,
     viewModel: QRListViewModel,
-    onThemeChanged: (Boolean) -> Unit
+    onThemeChanged: (Boolean) -> Unit,
+    barcodeLauncher: ActivityResultLauncher<ScanOptions>
 ) {
     val state = viewModel.state.value
     val scaffoldState = rememberScaffoldState()
-    val scope = rememberCoroutineScope()
-    val invalidUrlString = stringResource(id = R.string.qr_item_invalid_url)
+    var qrImage: Bitmap? by rememberSaveable { mutableStateOf(null) }
+    var qrImageToShow: QRItem by rememberSaveable { mutableStateOf(QRItem(category = viewModel.recentCategoryText.value)) }
     var qrToEdit: QRItem by rememberSaveable { mutableStateOf(QRItem(category = viewModel.recentCategoryText.value)) }
     var qrToDelete: QRItem by rememberSaveable { mutableStateOf(QRItem(category = viewModel.recentCategoryText.value)) }
     var qrCategoryToDelete: QRCategory by rememberSaveable { mutableStateOf(QRCategory("")) }
@@ -52,6 +57,9 @@ fun QRListScreen(
             QRTopBar(
                 recentCategory = context.resources.getString(R.string.qr_topbar_recent_category),
                 viewModel = viewModel,
+                onAddQRCategoryClick = {
+                    state.showAddCategoryDialog.value = true
+                },
                 onCategoryDeleteClicked = {
                     qrCategoryToDelete = it
                     state.showDeleteCategoryDialog.value = true
@@ -62,11 +70,11 @@ fun QRListScreen(
         floatingActionButton = {
             QRScanFloatingButton(
                 application = application,
-                context = context,
                 onAddQRCategoryClick = {
                     state.showAddCategoryDialog.value = true
                 },
-                onThemeChanged
+                onThemeChanged = onThemeChanged,
+                barcodeLauncher = barcodeLauncher
             )
         },
         floatingActionButtonPosition = FabPosition.Center,
@@ -94,12 +102,30 @@ fun QRListScreen(
                         context = context,
                         viewModel = viewModel,
                         onOpenUrlFailed = {
-                            scope.launch {
-                                scaffoldState.snackbarHostState
-                                    .showSnackbar(
-                                        message = invalidUrlString
-                                    )
-                            }
+                            val barcodeEncoder = BarcodeEncoder()
+                            val bitmap = barcodeEncoder.encodeBitmap(
+                                it.url,
+                                BarcodeFormat.QR_CODE,
+                                400,
+                                400
+                            )
+
+                            qrImage = bitmap
+                            qrImageToShow = it
+                            state.showQRImageDialog.value = true
+                        },
+                        onViewQRImageClick = {
+                            val barcodeEncoder = BarcodeEncoder()
+                            val bitmap = barcodeEncoder.encodeBitmap(
+                                it.url,
+                                BarcodeFormat.QR_CODE,
+                                400,
+                                400
+                            )
+
+                            qrImage = bitmap
+                            qrImageToShow = it
+                            state.showQRImageDialog.value = true
                         },
                         onEditButtonClick = {
                             qrToEdit = it
@@ -141,6 +167,12 @@ fun QRListScreen(
             }
         }
 
+        QRImageDialog(
+            context = context,
+            viewModel = viewModel,
+            qrImage = qrImage,
+            qrImageToShow = qrImageToShow
+        )
         QREditDialog(viewModel = viewModel, qrToEdit = qrToEdit)
         QRDeleteDialog(viewModel = viewModel, qrToDelete = qrToDelete)
         QRAddCategoryDialog(viewModel = viewModel)

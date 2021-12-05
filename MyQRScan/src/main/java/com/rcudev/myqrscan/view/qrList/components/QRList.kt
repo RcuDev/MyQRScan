@@ -26,7 +26,8 @@ import com.rcudev.myqrscan.view.qrList.components.listItems.QRListItem
 fun QRList(
     context: Activity,
     viewModel: QRListViewModel,
-    onOpenUrlFailed: () -> Unit,
+    onOpenUrlFailed: (QRItem) -> Unit,
+    onViewQRImageClick: (QRItem) -> Unit,
     onEditButtonClick: (QRItem) -> Unit,
     onDeleteButtonClick: (QRItem) -> Unit,
 ) {
@@ -55,11 +56,14 @@ fun QRList(
                             openURL.data = Uri.parse(urlToOpen)
                             ContextCompat.startActivity(context, openURL, null)
                         } else {
-                            onOpenUrlFailed()
+                            onOpenUrlFailed(qrItem)
                         }
                     } catch (e: Exception) {
-                        onOpenUrlFailed()
+                        onOpenUrlFailed(qrItem)
                     }
+                },
+                onViewQRImageClick = {
+                    onViewQRImageClick(qrItem)
                 },
                 onEditQRClick = {
                     onEditButtonClick(qrItem)

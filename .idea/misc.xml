@@ -6,7 +6,9 @@
         <entry key="MyQRScan/src/main/res/drawable-v23/splash_background.xml" value="0.2935185185185185" />
         <entry key="MyQRScan/src/main/res/drawable/ic_dark_light.xml" value="0.225" />
         <entry key="MyQRScan/src/main/res/drawable/ic_dark_mode.xml" value="0.225" />
+        <entry key="MyQRScan/src/main/res/drawable/ic_edit_button.xml" value="0.21574074074074073" />
         <entry key="MyQRScan/src/main/res/drawable/ic_light_mode.xml" value="0.225" />
+        <entry key="MyQRScan/src/main/res/drawable/ic_qr_image.xml" value="0.21574074074074073" />
         <entry key="MyQRScan/src/main/res/drawable/splash_background.xml" value="0.14722222222222223" />
         <entry key="MyQRScan/src/main/res/layout/activity_my_qr_scan_main.xml" value="0.1" />
       </map>

@@ -22,6 +22,7 @@ import com.rcudev.myqrscan.data.local.model.QRItem
 fun QRListItem(
     qrItem: QRItem,
     onCardClick: (QRItem) -> Unit,
+    onViewQRImageClick: () -> Unit,
     onEditQRClick: () -> Unit,
     onShareQRClick: () -> Unit,
     onDeleteQRClick: () -> Unit
@@ -54,6 +55,17 @@ fun QRListItem(
                     .wrapContentWidth(Alignment.Start)
                     .align(Alignment.CenterVertically),
             )
+            IconButton(
+                onClick = {
+                    expanded = false
+                    onViewQRImageClick()
+                }
+            ) {
+                Image(
+                    painterResource(id = R.drawable.ic_qr_code_image),
+                    stringResource(id = R.string.qr_item_edit_qr_accessibility),
+                )
+            }
             Box(
                 modifier = Modifier
                     .padding(start = 6.dp)

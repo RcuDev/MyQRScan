@@ -14,7 +14,6 @@
 
     <!-- QR Item -->
     <string name="qr_item_empty_name">QR sin nombre.</string>
-    <string name="qr_item_invalid_url">No se puede abrir el enlace.</string>
     <string name="qr_item_edit_qr_accessibility">Editar el nombre del QR.</string>
     <string name="qr_item_share_qr_accessibility">Compartir el QR.</string>
     <string name="qr_item_delete_qr_accessibility">Borrar el QR.</string>
@@ -22,7 +21,9 @@
     <!-- Dialog -->
     <string name="qr_dialog_confirm">Confirmar</string>
     <string name="qr_dialog_cancel">Cancelar</string>
+    <string name="qr_dialog_close">Cerrar</string>
 
+    <string name="qr_image_dialog_description">Haz clic en la imagen QR y compártela.</string>
     <string name="qr_edit_dialog_title">Editar QR</string>
     <string name="qr_edit_dialog_description">Personaliza el nombre del QR</string>
     <string name="qr_delete_dialog_title">Eliminar QR</string>

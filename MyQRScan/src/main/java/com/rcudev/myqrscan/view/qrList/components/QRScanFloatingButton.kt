@@ -1,6 +1,6 @@
 package com.rcudev.myqrscan.view.qrList.components
 
-import android.app.Activity
+import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateIntAsState
@@ -20,16 +20,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.google.zxing.integration.android.IntentIntegrator
+import com.journeyapps.barcodescanner.ScanOptions
 import com.rcudev.myqrscan.MyQRScanApplication
 import com.rcudev.myqrscan.R
 
 @Composable
 fun QRScanFloatingButton(
     application: MyQRScanApplication,
-    context: Activity,
     onAddQRCategoryClick: () -> Unit,
-    onThemeChanged: (Boolean) -> Unit
+    onThemeChanged: (Boolean) -> Unit,
+    barcodeLauncher: ActivityResultLauncher<ScanOptions>
 ) {
 
     @DrawableRes
@@ -66,11 +66,11 @@ fun QRScanFloatingButton(
         }
         ExtendedFloatingActionButton(
             onClick = {
-                val qrScanner = IntentIntegrator(context)
-                qrScanner.setBarcodeImageEnabled(true)
-                qrScanner.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
-                qrScanner.setBeepEnabled(true)
-                qrScanner.initiateScan()
+                val options = ScanOptions()
+                options.setDesiredBarcodeFormats(ScanOptions.QR_CODE)
+                options.setBeepEnabled(false)
+                options.setBarcodeImageEnabled(true)
+                barcodeLauncher.launch(options)
             },
             contentColor = Color.Black,
             backgroundColor = Color.White,

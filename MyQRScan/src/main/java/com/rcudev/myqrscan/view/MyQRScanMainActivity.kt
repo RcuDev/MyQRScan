@@ -1,7 +1,6 @@
 package com.rcudev.myqrscan.view
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View.VISIBLE
@@ -15,7 +14,8 @@ import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
-import com.google.zxing.integration.android.IntentIntegrator
+import com.journeyapps.barcodescanner.ScanContract
+import com.journeyapps.barcodescanner.ScanIntentResult
 import com.rcudev.myqrscan.MyQRScanApplication
 import com.rcudev.myqrscan.R
 import com.rcudev.myqrscan.data.local.model.QRCategory
@@ -25,6 +25,7 @@ import com.rcudev.myqrscan.view.qrList.QRListViewModel
 import com.rcudev.myqrscan.view.theme.MyQRScanTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class MyQRScanMainActivity : ComponentActivity() {
@@ -56,7 +57,8 @@ class MyQRScanMainActivity : ComponentActivity() {
                                 putBoolean("DARK_THEME_VALUE", it)
                                 apply()
                             }
-                        })
+                        }, barcodeLauncher
+                    )
                 }
             }
         }
@@ -93,10 +95,8 @@ class MyQRScanMainActivity : ComponentActivity() {
 
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-
-        if (result != null) {
+    private val barcodeLauncher =
+        registerForActivityResult(ScanContract()) { result: ScanIntentResult ->
             if (result.contents != null) {
                 viewModel.selectedCategory.value =
                     QRCategory(resources.getString(R.string.qr_topbar_recent_category))
@@ -109,9 +109,7 @@ class MyQRScanMainActivity : ComponentActivity() {
                     )
                 )
             }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
         }
-    }
+
 }
 
