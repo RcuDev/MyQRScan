@@ -9,6 +9,7 @@ data class QRListState(
     val showQRImageDialog: MutableState<Boolean> = mutableStateOf(false),
     val showEditDialog: MutableState<Boolean> = mutableStateOf(false),
     val showDeleteDialog: MutableState<Boolean> = mutableStateOf(false),
+    val showCreateQRDialog: MutableState<Boolean> = mutableStateOf(false),
     val showAddCategoryDialog: MutableState<Boolean> = mutableStateOf(false),
     val showDeleteCategoryDialog: MutableState<Boolean> = mutableStateOf(false)
 )

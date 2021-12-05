@@ -27,7 +27,7 @@ import com.rcudev.myqrscan.R
 @Composable
 fun QRScanFloatingButton(
     application: MyQRScanApplication,
-    onAddQRCategoryClick: () -> Unit,
+    onCreateQRClick: () -> Unit,
     onThemeChanged: (Boolean) -> Unit,
     barcodeLauncher: ActivityResultLauncher<ScanOptions>
 ) {
@@ -43,7 +43,7 @@ fun QRScanFloatingButton(
     Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
         FloatingActionButton(
             onClick = {
-                onAddQRCategoryClick()
+                // Empty
             },
             modifier = Modifier
                 .width(44.dp)
@@ -85,7 +85,7 @@ fun QRScanFloatingButton(
         )
         FloatingActionButton(
             onClick = {
-                onAddQRCategoryClick()
+                onCreateQRClick()
             },
             modifier = Modifier
                 .width(44.dp)

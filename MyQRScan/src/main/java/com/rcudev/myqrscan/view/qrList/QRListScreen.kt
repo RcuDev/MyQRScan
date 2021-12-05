@@ -55,7 +55,7 @@ fun QRListScreen(
         scaffoldState = scaffoldState,
         topBar = {
             QRTopBar(
-                recentCategory = context.resources.getString(R.string.qr_topbar_recent_category),
+                recentCategory = context.resources.getString(R.string.qr_recent_category),
                 viewModel = viewModel,
                 onAddQRCategoryClick = {
                     state.showAddCategoryDialog.value = true
@@ -70,8 +70,8 @@ fun QRListScreen(
         floatingActionButton = {
             QRScanFloatingButton(
                 application = application,
-                onAddQRCategoryClick = {
-                    state.showAddCategoryDialog.value = true
+                onCreateQRClick = {
+                    state.showCreateQRDialog.value = true
                 },
                 onThemeChanged = onThemeChanged,
                 barcodeLauncher = barcodeLauncher
@@ -175,6 +175,7 @@ fun QRListScreen(
         )
         QREditDialog(viewModel = viewModel, qrToEdit = qrToEdit)
         QRDeleteDialog(viewModel = viewModel, qrToDelete = qrToDelete)
+        QRCreateQRDialog(viewModel = viewModel)
         QRAddCategoryDialog(viewModel = viewModel)
         QRCategoryDeleteDialog(viewModel = viewModel, qrCategoryToDelete = qrCategoryToDelete)
     }

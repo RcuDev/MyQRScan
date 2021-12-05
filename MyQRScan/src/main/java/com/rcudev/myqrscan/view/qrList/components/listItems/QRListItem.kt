@@ -10,6 +10,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -64,6 +65,7 @@ fun QRListItem(
                 Image(
                     painterResource(id = R.drawable.ic_qr_code_image),
                     stringResource(id = R.string.qr_item_edit_qr_accessibility),
+                    colorFilter = ColorFilter.tint(MaterialTheme.colors.onPrimary)
                 )
             }
             Box(

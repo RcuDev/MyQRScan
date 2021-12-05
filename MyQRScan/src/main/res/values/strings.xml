@@ -2,11 +2,12 @@
     <string name="app_name">MyQRScan</string>
 
     <!-- QR Topbar -->
-    <string name="qr_topbar_recent_category">Recientes</string>
+    <string name="qr_recent_category">Recientes</string>
 
     <!-- QR List -->
     <string name="qr_list_help_text">Todos los QR leídos se guardarán automáticamente en esta categoría. \n\n
-        Modifica el nombre o categoría del QR y añade nuevas categorías.</string>
+        Modifica el nombre o categoría del QR y añade nuevas categorías pulsando el botón superior "+". \n\n
+        Crea tus propios QR con el contenido que quieras pulsando el botón inferior "+".</string>
     <string name="qr_list_category_empty">Categoría vacía. \n\n
         Modifica la categoría del QR.</string>
     <string name="qr_list_error">Ha ocurrido un error!</string>
@@ -32,5 +33,7 @@
     <string name="qr_category_delete_dialog_description">Todos los QR pasarán a la lista de Recientes</string>
     <string name="qr_add_catalog_title">Nueva Categoría</string>
     <string name="qr_add_catalog_description">Pon el nombre de la nueva categoría.</string>
+    <string name="qr_create_title">Crear QR</string>
+    <string name="qr_create_description">Añade el contenido del QR que quieras crear.</string>
 
 </resources>

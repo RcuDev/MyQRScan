@@ -14,6 +14,7 @@ import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.stringResource
@@ -25,10 +26,12 @@ import com.rcudev.myqrscan.R
 import com.rcudev.myqrscan.data.local.model.QRItem
 import com.rcudev.myqrscan.view.qrList.QRListViewModel
 import com.rcudev.myqrscan.view.theme.Red600
+import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 
 
 const val SHARE_QR_IMAGE_TYPE = "image/*"
+const val DEFAULT_QR_IMAGE_NAME = "QRimage"
 
 @Composable
 fun QRImageDialog(
@@ -39,6 +42,7 @@ fun QRImageDialog(
 ) {
     val state = viewModel.state.value
     val shareQRImageString = stringResource(id = R.string.qr_item_share_qr_accessibility)
+    val scope = rememberCoroutineScope()
 
     if (state.showQRImageDialog.value) {
         AlertDialog(
@@ -60,20 +64,22 @@ fun QRImageDialog(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable {
-                                    val bytes = ByteArrayOutputStream()
-                                    qrImage.compress(Bitmap.CompressFormat.PNG, 100, bytes)
-                                    val path: String = MediaStore.Images.Media.insertImage(
-                                        context.contentResolver,
-                                        qrImage,
-                                        "QRImage",
-                                        null
-                                    )
-                                    ShareCompat
-                                        .IntentBuilder(context)
-                                        .setType(SHARE_QR_IMAGE_TYPE)
-                                        .setChooserTitle(shareQRImageString)
-                                        .setStream(Uri.parse(path))
-                                        .startChooser()
+                                    scope.launch {
+                                        val bytes = ByteArrayOutputStream()
+                                        qrImage.compress(Bitmap.CompressFormat.PNG, 100, bytes)
+                                        val path: String = MediaStore.Images.Media.insertImage(
+                                            context.contentResolver,
+                                            qrImage,
+                                            qrImageToShow.name ?: DEFAULT_QR_IMAGE_NAME,
+                                            null
+                                        )
+                                        ShareCompat
+                                            .IntentBuilder(context)
+                                            .setType(SHARE_QR_IMAGE_TYPE)
+                                            .setChooserTitle(shareQRImageString)
+                                            .setStream(Uri.parse(path))
+                                            .startChooser()
+                                    }
                                 }
                         )
                     }

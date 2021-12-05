@@ -44,7 +44,7 @@ class MyQRScanMainActivity : ComponentActivity() {
 
         sharedPref = this.getSharedPreferences("THEME_MODE", Context.MODE_PRIVATE)
         application.isDarkTheme.value = sharedPref.getBoolean("DARK_THEME_VALUE", false)
-        viewModel.initViewModel(QRCategory(resources.getString(R.string.qr_topbar_recent_category)))
+        viewModel.initViewModel(QRCategory(resources.getString(R.string.qr_recent_category)))
 
         findViewById<ComposeView>(R.id.myqrscan_compose_container).setContent {
             MyQRScanTheme(
@@ -99,13 +99,13 @@ class MyQRScanMainActivity : ComponentActivity() {
         registerForActivityResult(ScanContract()) { result: ScanIntentResult ->
             if (result.contents != null) {
                 viewModel.selectedCategory.value =
-                    QRCategory(resources.getString(R.string.qr_topbar_recent_category))
+                    QRCategory(resources.getString(R.string.qr_recent_category))
                 viewModel.saveQR(
                     QRItem(
                         null,
                         result.contents,
                         result.contents,
-                        resources.getString(R.string.qr_topbar_recent_category)
+                        resources.getString(R.string.qr_recent_category)
                     )
                 )
             }
