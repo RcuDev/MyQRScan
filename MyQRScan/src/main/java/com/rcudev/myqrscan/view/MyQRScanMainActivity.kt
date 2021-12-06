@@ -10,10 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.*
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.rcudev.myqrscan.MyQRScanApplication
@@ -63,6 +60,12 @@ class MyQRScanMainActivity : ComponentActivity() {
             }
         }
 
+        MobileAds.initialize(this) {}
+        MobileAds.setRequestConfiguration(
+            RequestConfiguration.Builder()
+                .setTestDeviceIds(listOf("30772B424E3E9B43E0BDAF4D84B807C8"))
+                .build()
+        )
         initAdMob()
     }
 
@@ -83,7 +86,6 @@ class MyQRScanMainActivity : ComponentActivity() {
 
     private fun initAdMob() {
         bannerAdView = findViewById(R.id.myqrscan_admob_banner)
-        MobileAds.initialize(this) { }
         val adRequest = AdRequest.Builder().build()
         bannerAdView.loadAd(adRequest)
         bannerAdView.adListener = object : AdListener() {

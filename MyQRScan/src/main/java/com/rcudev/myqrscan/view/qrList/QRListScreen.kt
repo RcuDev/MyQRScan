@@ -2,6 +2,7 @@ package com.rcudev.myqrscan.view.qrList
 
 import android.app.Activity
 import android.graphics.Bitmap
+import android.text.TextUtils
 import androidx.activity.result.ActivityResultLauncher
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -45,6 +46,7 @@ fun QRListScreen(
 ) {
     val state = viewModel.state.value
     val scaffoldState = rememberScaffoldState()
+    val recentCategory = stringResource(id = R.string.qr_recent_category)
     var qrImage: Bitmap? by rememberSaveable { mutableStateOf(null) }
     var qrImageToShow: QRItem by rememberSaveable { mutableStateOf(QRItem(category = viewModel.recentCategoryText.value)) }
     var qrToEdit: QRItem by rememberSaveable { mutableStateOf(QRItem(category = viewModel.recentCategoryText.value)) }
@@ -173,9 +175,19 @@ fun QRListScreen(
             qrImage = qrImage,
             qrImageToShow = qrImageToShow
         )
+
         QREditDialog(viewModel = viewModel, qrToEdit = qrToEdit)
         QRDeleteDialog(viewModel = viewModel, qrToDelete = qrToDelete)
-        QRCreateQRDialog(viewModel = viewModel)
+        QRCreateQRDialog(context = context, viewModel = viewModel, saveCreatedQR = {
+            if (!TextUtils.isEmpty(it)) {
+                viewModel.saveQR(
+                    QRItem(
+                        null, it, it,
+                        recentCategory
+                    )
+                )
+            }
+        })
         QRAddCategoryDialog(viewModel = viewModel)
         QRCategoryDeleteDialog(viewModel = viewModel, qrCategoryToDelete = qrCategoryToDelete)
     }

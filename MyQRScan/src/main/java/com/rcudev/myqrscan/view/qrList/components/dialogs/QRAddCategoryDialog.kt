@@ -5,21 +5,19 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
-import androidx.compose.material.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rcudev.myqrscan.R
 import com.rcudev.myqrscan.data.local.model.QRCategory
 import com.rcudev.myqrscan.view.qrList.QRListViewModel
+import com.rcudev.myqrscan.view.qrList.components.QRAutofocusTextField
 import com.rcudev.myqrscan.view.theme.Green600
 import com.rcudev.myqrscan.view.theme.Red600
 
@@ -50,13 +48,9 @@ fun QRAddCategoryDialog(
                         modifier = Modifier.fillMaxWidth()
                     )
                     Spacer(modifier = Modifier.padding(top = 5.dp))
-                    TextField(
-                        value = newCategory,
-                        singleLine = true,
-                        modifier = Modifier.fillMaxWidth(),
-                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                        onValueChange = { newCategory = it }
-                    )
+                    QRAutofocusTextField(value = newCategory, onValueChanged = {
+                        newCategory = it
+                    })
                     Spacer(modifier = Modifier.padding(top = 5.dp))
                 }
             },

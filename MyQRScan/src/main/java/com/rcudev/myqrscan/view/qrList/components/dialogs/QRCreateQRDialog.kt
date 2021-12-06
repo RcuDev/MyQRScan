@@ -1,5 +1,6 @@
 package com.rcudev.myqrscan.view.qrList.components.dialogs
 
+import android.app.Activity
 import android.text.TextUtils
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -12,29 +13,40 @@ import androidx.compose.material.TextButton
 import androidx.compose.material.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.rcudev.myqrscan.R
 import com.rcudev.myqrscan.data.local.model.QRItem
 import com.rcudev.myqrscan.view.qrList.QRListViewModel
+import com.rcudev.myqrscan.view.qrList.components.QRAutofocusTextField
 import com.rcudev.myqrscan.view.theme.Green600
 import com.rcudev.myqrscan.view.theme.Red600
 
 @Composable
 fun QRCreateQRDialog(
-    viewModel: QRListViewModel
+    context: Activity,
+    viewModel: QRListViewModel,
+    saveCreatedQR: (String) -> Unit
 ) {
     val state = viewModel.state.value
-    val recentCategory = stringResource(id = R.string.qr_recent_category)
     var newQRContent by remember { mutableStateOf("") }
+    var mInterstitialAd: InterstitialAd? = null
 
     if (state.showCreateQRDialog.value) {
         AlertDialog(
             onDismissRequest = {
-                state.showAddCategoryDialog.value = false
+                state.showCreateQRDialog.value = false
             },
             title = {
                 Text(
@@ -51,13 +63,9 @@ fun QRCreateQRDialog(
                         modifier = Modifier.fillMaxWidth()
                     )
                     Spacer(modifier = Modifier.padding(top = 5.dp))
-                    TextField(
-                        value = newQRContent,
-                        singleLine = true,
-                        modifier = Modifier.fillMaxWidth(),
-                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                        onValueChange = { newQRContent = it }
-                    )
+                    QRAutofocusTextField(value = newQRContent, onValueChanged = {
+                        newQRContent = it
+                    })
                     Spacer(modifier = Modifier.padding(top = 5.dp))
                 }
             },
@@ -65,15 +73,45 @@ fun QRCreateQRDialog(
                 if (!TextUtils.isEmpty(newQRContent)) {
                     TextButton(
                         onClick = {
-                            viewModel.saveQR(
-                                QRItem(
-                                    null,
-                                    newQRContent,
-                                    newQRContent,
-                                    recentCategory
-                                )
-                            )
-                            newQRContent = ""
+                            val adRequest = AdRequest.Builder().build()
+
+                            InterstitialAd.load(
+                                context,
+                                "ca-app-pub-8389040971985833/8121118352",
+                                adRequest,
+                                object : InterstitialAdLoadCallback() {
+                                    override fun onAdFailedToLoad(adError: LoadAdError) {
+                                        mInterstitialAd = null
+                                        saveCreatedQR(newQRContent)
+                                        newQRContent = ""
+                                        state.showCreateQRDialog.value = false
+                                    }
+                                    override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                                        mInterstitialAd = interstitialAd
+                                    }
+                                })
+
+                            mInterstitialAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
+                                override fun onAdDismissedFullScreenContent() {
+                                    saveCreatedQR(newQRContent)
+                                    newQRContent = ""
+                                    state.showCreateQRDialog.value = false
+                                }
+
+                                override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
+                                    saveCreatedQR(newQRContent)
+                                    newQRContent = ""
+                                    state.showCreateQRDialog.value = false
+                                }
+
+                                override fun onAdShowedFullScreenContent() {
+                                    mInterstitialAd = null
+                                }
+                            }
+
+                            mInterstitialAd?.apply {
+                                this.show(context)
+                            }
                         }) {
                         Text(
                             text = stringResource(id = R.string.qr_dialog_confirm),
@@ -86,7 +124,7 @@ fun QRCreateQRDialog(
             dismissButton = {
                 TextButton(
                     onClick = {
-                        state.showAddCategoryDialog.value = false
+                        state.showCreateQRDialog.value = false
                         newQRContent = ""
                     }) {
                     Text(

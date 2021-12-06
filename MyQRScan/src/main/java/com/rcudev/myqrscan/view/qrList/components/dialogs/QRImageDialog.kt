@@ -56,7 +56,7 @@ fun QRImageDialog(
                         fontSize = 14.sp,
                         modifier = Modifier.fillMaxWidth()
                     )
-                    Spacer(modifier = Modifier.padding(top = 5.dp))
+                    Spacer(modifier = Modifier.padding(top = 10.dp))
                     qrImage?.let {
                         Image(
                             bitmap = qrImage.asImageBitmap(),
@@ -83,7 +83,7 @@ fun QRImageDialog(
                                 }
                         )
                     }
-                    Spacer(modifier = Modifier.padding(top = 5.dp))
+                    Spacer(modifier = Modifier.padding(top = 10.dp))
                     qrImageToShow.url?.apply {
                         Text(
                             text = this,
