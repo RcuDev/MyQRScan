@@ -108,7 +108,6 @@ fun QRCreateQRDialog(
                                     mInterstitialAd = null
                                 }
                             }
-
                             mInterstitialAd?.apply {
                                 this.show(context)
                             }

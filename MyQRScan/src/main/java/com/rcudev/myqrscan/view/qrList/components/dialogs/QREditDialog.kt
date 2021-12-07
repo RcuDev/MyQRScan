@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.sp
 import com.rcudev.myqrscan.R
 import com.rcudev.myqrscan.data.local.model.QRItem
 import com.rcudev.myqrscan.view.qrList.QRListViewModel
+import com.rcudev.myqrscan.view.qrList.components.QRAutofocusTextField
 import com.rcudev.myqrscan.view.theme.Green600
 import com.rcudev.myqrscan.view.theme.Red600
 
@@ -28,12 +29,8 @@ fun QREditDialog(
 ) {
     val state = viewModel.state.value
     val emptyNameString = stringResource(id = R.string.qr_item_empty_name)
-    var newQrName by remember { mutableStateOf("") }
+    var newQrName by remember { mutableStateOf(qrToEdit.name ?: "") }
     var expanded by remember { mutableStateOf(false) }
-
-    qrToEdit.let {
-        newQrName = if (qrToEdit.name.equals(qrToEdit.url)) "" else qrToEdit.name ?: ""
-    }
 
     if (state.showEditDialog.value) {
         AlertDialog(
@@ -55,13 +52,9 @@ fun QREditDialog(
                         modifier = Modifier.fillMaxWidth()
                     )
                     Spacer(modifier = Modifier.padding(top = 5.dp))
-                    TextField(
-                        value = newQrName,
-                        singleLine = true,
-                        modifier = Modifier.fillMaxWidth(),
-                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                        onValueChange = { newQrName = it }
-                    )
+                    QRAutofocusTextField(value = qrToEdit.name ?: "", onValueChanged = {
+                        newQrName = it
+                    })
                     Spacer(modifier = Modifier.padding(top = 5.dp))
                     qrToEdit.url?.apply {
                         Text(
