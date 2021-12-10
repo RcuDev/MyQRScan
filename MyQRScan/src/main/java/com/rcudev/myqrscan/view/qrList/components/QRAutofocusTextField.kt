@@ -30,7 +30,6 @@ fun QRAutofocusTextField(
             )
         )
     }
-    var newValue by remember { mutableStateOf(value) }
 
     TextField(
         value = textState.value,
@@ -40,7 +39,7 @@ fun QRAutofocusTextField(
             .focusRequester(focusRequester = focusRequester),
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
         trailingIcon = {
-            IconButton(onClick = { newValue = "" }) {
+            IconButton(onClick = { textState.value = TextFieldValue() }) {
                 Icon(
                     Icons.Rounded.Close,
                     contentDescription = null,
@@ -48,7 +47,10 @@ fun QRAutofocusTextField(
                 )
             }
         },
-        onValueChange = { onValueChanged(newValue) }
+        onValueChange = {
+            textState.value = it
+            onValueChanged(textState.value.text)
+        }
     )
 
     DisposableEffect(Unit) {
