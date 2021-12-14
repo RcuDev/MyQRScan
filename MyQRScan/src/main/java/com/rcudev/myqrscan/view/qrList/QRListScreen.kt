@@ -7,11 +7,8 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -33,6 +30,10 @@ import com.rcudev.myqrscan.view.qrList.components.QRList
 import com.rcudev.myqrscan.view.qrList.components.QRScanFloatingButton
 import com.rcudev.myqrscan.view.qrList.components.QRTopBar
 import com.rcudev.myqrscan.view.qrList.components.dialogs.*
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 const val SHARE_QR_TYPE = "text/plain"
 
@@ -45,6 +46,7 @@ fun QRListScreen(
     barcodeLauncher: ActivityResultLauncher<ScanOptions>
 ) {
     val state = viewModel.state.value
+    val scope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()
     val recentCategory = stringResource(id = R.string.qr_recent_category)
     var qrImage: Bitmap? by rememberSaveable { mutableStateOf(null) }
@@ -73,6 +75,7 @@ fun QRListScreen(
             QRScanFloatingButton(
                 application = application,
                 onCreateQRClick = {
+                    state.resetCreateQRText.value = true
                     state.showCreateQRDialog.value = true
                 },
                 onThemeChanged = onThemeChanged,
@@ -104,30 +107,38 @@ fun QRListScreen(
                         context = context,
                         viewModel = viewModel,
                         onOpenUrlFailed = {
-                            val barcodeEncoder = BarcodeEncoder()
-                            val bitmap = barcodeEncoder.encodeBitmap(
-                                it.url,
-                                BarcodeFormat.QR_CODE,
-                                400,
-                                400
-                            )
+                            scope.launch(IO) {
+                                val barcodeEncoder = BarcodeEncoder()
+                                val bitmap = barcodeEncoder.encodeBitmap(
+                                    it.url,
+                                    BarcodeFormat.QR_CODE,
+                                    400,
+                                    400
+                                )
 
-                            qrImage = bitmap
-                            qrImageToShow = it
-                            state.showQRImageDialog.value = true
+                                qrImage = bitmap
+                                qrImageToShow = it
+                                withContext(Main) {
+                                    state.showQRImageDialog.value = true
+                                }
+                            }
                         },
                         onViewQRImageClick = {
-                            val barcodeEncoder = BarcodeEncoder()
-                            val bitmap = barcodeEncoder.encodeBitmap(
-                                it.url,
-                                BarcodeFormat.QR_CODE,
-                                400,
-                                400
-                            )
+                            scope.launch(IO) {
+                                val barcodeEncoder = BarcodeEncoder()
+                                val bitmap = barcodeEncoder.encodeBitmap(
+                                    it.url,
+                                    BarcodeFormat.QR_CODE,
+                                    400,
+                                    400
+                                )
 
-                            qrImage = bitmap
-                            qrImageToShow = it
-                            state.showQRImageDialog.value = true
+                                qrImage = bitmap
+                                qrImageToShow = it
+                                withContext(Main) {
+                                    state.showQRImageDialog.value = true
+                                }
+                            }
                         },
                         onEditButtonClick = {
                             qrToEdit = it

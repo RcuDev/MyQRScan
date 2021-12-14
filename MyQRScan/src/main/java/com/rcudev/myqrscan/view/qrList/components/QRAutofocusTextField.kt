@@ -1,5 +1,6 @@
 package com.rcudev.myqrscan.view.qrList.components
 
+import android.text.TextUtils
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
@@ -29,6 +30,10 @@ fun QRAutofocusTextField(
                 selection = TextRange(value.length)
             )
         )
+    }
+
+    if (TextUtils.isEmpty(value)) {
+        onValueChanged(textState.value.text)
     }
 
     TextField(

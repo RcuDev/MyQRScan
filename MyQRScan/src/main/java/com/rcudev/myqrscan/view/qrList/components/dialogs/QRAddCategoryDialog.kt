@@ -48,7 +48,7 @@ fun QRAddCategoryDialog(
                         modifier = Modifier.fillMaxWidth()
                     )
                     Spacer(modifier = Modifier.padding(top = 5.dp))
-                    QRAutofocusTextField(value = newCategory, onValueChanged = {
+                    QRAutofocusTextField(value = "", onValueChanged = {
                         newCategory = it
                     })
                     Spacer(modifier = Modifier.padding(top = 5.dp))

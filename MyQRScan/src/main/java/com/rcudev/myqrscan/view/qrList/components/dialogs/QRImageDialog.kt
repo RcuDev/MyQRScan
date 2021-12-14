@@ -26,7 +26,11 @@ import com.rcudev.myqrscan.R
 import com.rcudev.myqrscan.data.local.model.QRItem
 import com.rcudev.myqrscan.view.qrList.QRListViewModel
 import com.rcudev.myqrscan.view.theme.Red600
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 
 
@@ -64,22 +68,13 @@ fun QRImageDialog(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable {
-                                    scope.launch {
-                                        val bytes = ByteArrayOutputStream()
-                                        qrImage.compress(Bitmap.CompressFormat.PNG, 100, bytes)
-                                        val path: String = MediaStore.Images.Media.insertImage(
-                                            context.contentResolver,
-                                            qrImage,
-                                            qrImageToShow.name ?: DEFAULT_QR_IMAGE_NAME,
-                                            null
-                                        )
-                                        ShareCompat
-                                            .IntentBuilder(context)
-                                            .setType(SHARE_QR_IMAGE_TYPE)
-                                            .setChooserTitle(shareQRImageString)
-                                            .setStream(Uri.parse(path))
-                                            .startChooser()
-                                    }
+                                    launchSharedQRImageDialog(
+                                        scope,
+                                        qrImage,
+                                        context,
+                                        qrImageToShow,
+                                        shareQRImageString
+                                    )
                                 }
                         )
                     }
@@ -108,5 +103,33 @@ fun QRImageDialog(
             }
         )
     }
+}
 
+fun launchSharedQRImageDialog(
+    scope: CoroutineScope,
+    qrImage: Bitmap?,
+    context: Activity,
+    qrImageToShow: QRItem,
+    shareQRImageString: String
+) {
+    qrImage?.let {
+        scope.launch(IO) {
+            val bytes = ByteArrayOutputStream()
+            qrImage.compress(Bitmap.CompressFormat.PNG, 100, bytes)
+            val path: String = MediaStore.Images.Media.insertImage(
+                context.contentResolver,
+                qrImage,
+                qrImageToShow.name ?: DEFAULT_QR_IMAGE_NAME,
+                null
+            )
+            withContext(Main) {
+                ShareCompat
+                    .IntentBuilder(context)
+                    .setType(SHARE_QR_IMAGE_TYPE)
+                    .setChooserTitle(shareQRImageString)
+                    .setStream(Uri.parse(path))
+                    .startChooser()
+            }
+        }
+    }
 }
