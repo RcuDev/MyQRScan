@@ -36,9 +36,23 @@ fun QRCreateQRDialog(
     saveCreatedQR: (String) -> Unit
 ) {
     val state = viewModel.state.value
+    val adRequest = AdRequest.Builder().build()
     var newQRContent by remember { mutableStateOf("") }
     var isLoadingAd by remember { mutableStateOf(false) }
-    var mInterstitialAd: InterstitialAd?
+    var interstitialAd: InterstitialAd? = null
+
+    InterstitialAd.load(
+        context,
+        "ca-app-pub-8389040971985833/8121118352",
+        adRequest,
+        object : InterstitialAdLoadCallback() {
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                interstitialAd = null
+            }
+            override fun onAdLoaded(ad: InterstitialAd) {
+                interstitialAd = ad
+            }
+        })
 
     if (state.resetCreateQRText.value) {
         newQRContent = ""
@@ -81,44 +95,28 @@ fun QRCreateQRDialog(
                         enabled = !isLoadingAd,
                         onClick = {
                             isLoadingAd = true
-
-                            val adRequest = AdRequest.Builder().build()
-
-                            InterstitialAd.load(
-                                context,
-                                "ca-app-pub-8389040971985833/8121118352",
-                                adRequest,
-                                object : InterstitialAdLoadCallback() {
-                                    override fun onAdFailedToLoad(adError: LoadAdError) {
-                                        mInterstitialAd = null
+                            if (interstitialAd != null) {
+                                interstitialAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
+                                    override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
                                         saveCreatedQR(newQRContent)
                                         newQRContent = ""
                                         state.showCreateQRDialog.value = false
                                         isLoadingAd = false
                                     }
-                                    override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                                        mInterstitialAd = interstitialAd
-                                        mInterstitialAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
-                                            override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
-                                                saveCreatedQR(newQRContent)
-                                                newQRContent = ""
-                                                state.showCreateQRDialog.value = false
-                                                isLoadingAd = false
-                                            }
 
-                                            override fun onAdShowedFullScreenContent() {
-                                                mInterstitialAd = null
-                                                saveCreatedQR(newQRContent)
-                                                state.showCreateQRDialog.value = false
-                                                isLoadingAd = false
-                                            }
-                                        }
-                                        interstitialAd.show(context)
-
+                                    override fun onAdShowedFullScreenContent() {
+                                        interstitialAd = null
+                                        saveCreatedQR(newQRContent)
                                         state.showCreateQRDialog.value = false
                                         isLoadingAd = false
                                     }
-                                })
+                                }
+                                interstitialAd?.show(context)
+                            } else {
+                                saveCreatedQR(newQRContent)
+                                state.showCreateQRDialog.value = false
+                                isLoadingAd = false
+                            }
                         }) {
                         Text(
                             text = stringResource(id = R.string.qr_dialog_confirm),
