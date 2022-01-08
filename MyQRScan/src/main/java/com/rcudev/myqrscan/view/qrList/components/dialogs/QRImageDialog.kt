@@ -27,10 +27,7 @@ import com.rcudev.myqrscan.data.local.model.QRItem
 import com.rcudev.myqrscan.view.qrList.QRListViewModel
 import com.rcudev.myqrscan.view.theme.Red600
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 
 
@@ -47,6 +44,7 @@ fun QRImageDialog(
     val state = viewModel.state.value
     val shareQRImageString = stringResource(id = R.string.qr_item_share_qr_accessibility)
     val scope = rememberCoroutineScope()
+    val path = renderSharedQRImageDialog(qrImage, context, qrImageToShow)
 
     if (state.showQRImageDialog.value) {
         AlertDialog(
@@ -70,9 +68,8 @@ fun QRImageDialog(
                                 .clickable {
                                     launchSharedQRImageDialog(
                                         scope,
-                                        qrImage,
+                                        path,
                                         context,
-                                        qrImageToShow,
                                         shareQRImageString
                                     )
                                 }
@@ -105,24 +102,36 @@ fun QRImageDialog(
     }
 }
 
-fun launchSharedQRImageDialog(
-    scope: CoroutineScope,
+fun renderSharedQRImageDialog(
     qrImage: Bitmap?,
     context: Activity,
-    qrImageToShow: QRItem,
-    shareQRImageString: String
-) {
-    qrImage?.let {
-        scope.launch(IO) {
+    qrImageToShow: QRItem
+): String? {
+    try {
+        qrImage?.let {
             val bytes = ByteArrayOutputStream()
             qrImage.compress(Bitmap.CompressFormat.PNG, 100, bytes)
-            val path: String = MediaStore.Images.Media.insertImage(
+            return MediaStore.Images.Media.insertImage(
                 context.contentResolver,
                 qrImage,
                 qrImageToShow.name ?: DEFAULT_QR_IMAGE_NAME,
                 null
             )
-            withContext(Main) {
+        }
+    } catch (ignored: Exception) {
+    }
+    return null
+}
+
+fun launchSharedQRImageDialog(
+    scope: CoroutineScope?,
+    path: String?,
+    context: Activity,
+    shareQRImageString: String
+) {
+    try {
+        path?.let {
+            scope?.launch {
                 ShareCompat
                     .IntentBuilder(context)
                     .setType(SHARE_QR_IMAGE_TYPE)
@@ -131,5 +140,7 @@ fun launchSharedQRImageDialog(
                     .startChooser()
             }
         }
+    } catch (ignored: Exception) {
+        // Empty
     }
 }

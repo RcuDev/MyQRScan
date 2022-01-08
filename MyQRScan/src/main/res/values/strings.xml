@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyQRFactory</string>
+    <string name="app_name" translatable="false">MyQRFactory</string>
 
     <!-- QR Topbar -->
     <string name="qr_recent_category">Recientes</string>
