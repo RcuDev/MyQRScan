@@ -54,7 +54,7 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
-        kotlinCompilerVersion '1.5.31'
+        kotlinCompilerVersion '1.6.0'
     }
     packagingOptions {
         resources {
@@ -90,8 +90,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0"
 
     // Room
-    implementation "androidx.room:room-ktx:2.4.0"
-    kapt "androidx.room:room-compiler:2.4.0"
+    implementation "androidx.room:room-ktx:2.4.1"
+    kapt "androidx.room:room-compiler:2.4.1"
 
     // Dagger - Hilt
     implementation "com.google.dagger:hilt-android:2.38.1"
@@ -100,14 +100,14 @@ dependencies {
     kapt "androidx.hilt:hilt-compiler:1.0.0"
 
     // Ads
-    implementation 'com.google.android.gms:play-services-ads:20.5.0'
-    constraints {
-        implementation('androidx.work:work-runtime:2.7.0') {
-            because '''androidx.work:work-runtime:2.1.0 pulled from play-services-ads
-                   has a bug using PendingIntent without FLAG_IMMUTABLE or
-                   FLAG_MUTABLE and will fail in apps targeting S+.'''
-        }
-    }
+    //implementation 'com.google.android.gms:play-services-ads:20.5.0'
+    //constraints {
+    //    implementation('androidx.work:work-runtime:2.7.0') {
+    //        because '''androidx.work:work-runtime:2.1.0 pulled from play-services-ads
+    //               has a bug using PendingIntent without FLAG_IMMUTABLE or
+    //               FLAG_MUTABLE and will fail in apps targeting S+.'''
+    //    }
+    //}
     
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

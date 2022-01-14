@@ -189,7 +189,7 @@ fun QRListScreen(
 
         QREditDialog(viewModel = viewModel, qrToEdit = qrToEdit)
         QRDeleteDialog(viewModel = viewModel, qrToDelete = qrToDelete)
-        QRCreateQRDialog(context = context, viewModel = viewModel, saveCreatedQR = {
+        QRCreateQRDialog(viewModel = viewModel, saveCreatedQR = {
             if (!TextUtils.isEmpty(it)) {
                 viewModel.saveQR(
                     QRItem(
