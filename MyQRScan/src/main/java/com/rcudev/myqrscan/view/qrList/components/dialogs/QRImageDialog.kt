@@ -30,7 +30,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 
-
 const val SHARE_QR_IMAGE_TYPE = "image/*"
 const val DEFAULT_QR_IMAGE_NAME = "QRimage"
 

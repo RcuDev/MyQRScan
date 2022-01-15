@@ -15,8 +15,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rcudev.myqrscan.R
+import com.rcudev.myqrscan.view.common.components.QRAutofocusTextField
 import com.rcudev.myqrscan.view.qrList.QRListViewModel
-import com.rcudev.myqrscan.view.qrList.components.QRAutofocusTextField
 import com.rcudev.myqrscan.view.theme.Green600
 import com.rcudev.myqrscan.view.theme.Red600
 

@@ -10,12 +10,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.rcudev.myqrscan.MyQRScanApplication
 import com.rcudev.myqrscan.R
 import com.rcudev.myqrscan.data.local.model.QRCategory
 import com.rcudev.myqrscan.data.local.model.QRItem
+import com.rcudev.myqrscan.view.common.nav.NavScreen
+import com.rcudev.myqrscan.view.qrConfig.QRConfigScreen
 import com.rcudev.myqrscan.view.qrList.QRListScreen
 import com.rcudev.myqrscan.view.qrList.QRListViewModel
 import com.rcudev.myqrscan.view.theme.MyQRScanTheme
@@ -51,15 +56,34 @@ class MyQRScanMainActivity : ComponentActivity() {
                         darkTheme = application.isDarkTheme.value
                     ) {
                         Surface(modifier = Modifier.fillMaxSize()) {
-                            QRListScreen(
-                                application, this@MyQRScanMainActivity, viewModel,
-                                onThemeChanged = {
-                                    with(sharedPref.edit()) {
-                                        putBoolean("DARK_THEME_VALUE", it)
-                                        apply()
-                                    }
-                                }, barcodeLauncher
-                            )
+                            val navController = rememberNavController()
+                            NavHost(
+                                navController = navController,
+                                startDestination = NavScreen.QRListScreen.route
+                            ) {
+                                composable(
+                                    route = NavScreen.QRListScreen.route
+                                ) {
+                                    QRListScreen(
+                                        application = application,
+                                        context = this@MyQRScanMainActivity,
+                                        navController = navController,
+                                        viewModel = viewModel,
+                                        onThemeChanged = {
+                                            with(sharedPref.edit()) {
+                                                putBoolean("DARK_THEME_VALUE", it)
+                                                apply()
+                                            }
+                                        },
+                                        barcodeLauncher = barcodeLauncher
+                                    )
+                                }
+                                composable(
+                                    route = NavScreen.QRConfigScreen.route
+                                ) {
+                                    QRConfigScreen()
+                                }
+                            }
                         }
                     }
                 }

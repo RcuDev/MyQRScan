@@ -1,4 +1,4 @@
-package com.rcudev.myqrscan.view.qrList.components
+package com.rcudev.myqrscan.view.common.components
 
 import android.text.TextUtils
 import androidx.compose.foundation.layout.fillMaxWidth

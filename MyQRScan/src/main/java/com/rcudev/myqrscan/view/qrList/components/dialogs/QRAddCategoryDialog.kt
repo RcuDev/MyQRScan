@@ -16,14 +16,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rcudev.myqrscan.R
 import com.rcudev.myqrscan.data.local.model.QRCategory
+import com.rcudev.myqrscan.view.common.components.QRAutofocusTextField
 import com.rcudev.myqrscan.view.qrList.QRListViewModel
-import com.rcudev.myqrscan.view.qrList.components.QRAutofocusTextField
 import com.rcudev.myqrscan.view.theme.Green600
 import com.rcudev.myqrscan.view.theme.Red600
 
 @Composable
 fun QRAddCategoryDialog(
-    viewModel: QRListViewModel
+    viewModel: QRListViewModel,
 ) {
     val state = viewModel.state.value
     var newCategory by remember { mutableStateOf("") }

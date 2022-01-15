@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.journeyapps.barcodescanner.ScanOptions
@@ -41,6 +42,7 @@ const val SHARE_QR_TYPE = "text/plain"
 fun QRListScreen(
     application: MyQRScanApplication,
     context: Activity,
+    navController: NavController,
     viewModel: QRListViewModel,
     onThemeChanged: (Boolean) -> Unit,
     barcodeLauncher: ActivityResultLauncher<ScanOptions>
@@ -70,7 +72,7 @@ fun QRListScreen(
                 }
             )
         },
-        bottomBar = { QRBottomBar() },
+        bottomBar = { QRBottomBar(navController = navController) },
         floatingActionButton = {
             QRScanFloatingButton(
                 application = application,
@@ -186,17 +188,11 @@ fun QRListScreen(
             qrImage = qrImage,
             qrImageToShow = qrImageToShow
         )
-
         QREditDialog(viewModel = viewModel, qrToEdit = qrToEdit)
         QRDeleteDialog(viewModel = viewModel, qrToDelete = qrToDelete)
         QRCreateQRDialog(viewModel = viewModel, saveCreatedQR = {
             if (!TextUtils.isEmpty(it)) {
-                viewModel.saveQR(
-                    QRItem(
-                        null, it, it,
-                        recentCategory
-                    )
-                )
+                viewModel.saveQR(QRItem(null, it, it, recentCategory))
             }
         })
         QRAddCategoryDialog(viewModel = viewModel)
