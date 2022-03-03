@@ -1,7 +1,8 @@
 package com.rcudev.myqrscan.data.local
 
 import androidx.room.*
-import androidx.room.OnConflictStrategy.*
+import androidx.room.OnConflictStrategy.Companion.IGNORE
+import androidx.room.OnConflictStrategy.Companion.REPLACE
 import com.rcudev.myqrscan.data.local.model.QRCategory
 import com.rcudev.myqrscan.data.local.model.QRItem
 
