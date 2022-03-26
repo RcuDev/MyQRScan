@@ -1,17 +1,27 @@
 package com.rcudev.myqrscan
 
 import android.app.Application
-import androidx.compose.runtime.mutableStateOf
-import dagger.hilt.android.HiltAndroidApp
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
-import android.os.StrictMode.VmPolicy
-
+import androidx.compose.runtime.mutableStateOf
+import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class MyQRScanApplication : Application() {
 
     var isDarkTheme = mutableStateOf(false)
+
+    override fun onCreate() {
+        StrictMode.setThreadPolicy(
+            ThreadPolicy.Builder()
+                .detectDiskReads()
+                .detectDiskWrites()
+                .detectNetwork()
+                .penaltyLog()
+                .build()
+        )
+        super.onCreate()
+    }
 
     fun toggleTheme() {
         isDarkTheme.value = !isDarkTheme.value
