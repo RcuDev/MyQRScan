@@ -9,15 +9,20 @@ import javax.inject.Inject
 class MyQRScanScanRepositoryImpl @Inject constructor(private val myQRScanDao: MyQRScanDao) :
     MyQRScanRepository {
 
+    companion object {
+        private const val DEFAULT_CATEGORY_ES = "Recientes"
+        private const val DEFAULT_CATEGORY_EN = "Recent"
+    }
+
     /**
      * QR Items
      */
 
     override suspend fun getQRListByCategory(category: String): List<QRItem> {
         val categoryList = myQRScanDao.getQRListByCategory(category)
-        if (category == "Recientes" && categoryList.isEmpty()) {
+        if (category == DEFAULT_CATEGORY_ES && categoryList.isEmpty()) {
             myQRScanDao.moveQRToRecentCategory(
-                "Recent",
+                DEFAULT_CATEGORY_EN,
                 category
             )
         }

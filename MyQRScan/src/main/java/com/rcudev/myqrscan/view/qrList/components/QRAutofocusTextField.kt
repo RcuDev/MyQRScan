@@ -39,6 +39,7 @@ fun QRAutofocusTextField(
     TextField(
         value = textState.value,
         singleLine = true,
+        maxLines = 1,
         modifier = Modifier
             .fillMaxWidth()
             .focusRequester(focusRequester = focusRequester),

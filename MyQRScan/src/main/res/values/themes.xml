@@ -5,7 +5,7 @@
         <item name="android:colorPrimary">#F44336</item>
         <item name="android:colorPrimaryDark">#D32F2F</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?android:attr/colorPrimaryDark
+        <item name="android:statusBarColor" >?android:attr/colorPrimaryDark
         </item>
         <!-- Customize your theme here. -->
     </style>

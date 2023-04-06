@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.rcudev.myqrscan">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
@@ -15,27 +14,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyQRScan">
+
         <activity
             android:name=".view.MyQRScanSplashActivity"
             android:exported="true"
             android:hardwareAccelerated="true"
-            android:theme="@style/MyQRScanSplashTheme">
+            android:screenOrientation="portrait"
+            android:theme="@style/MyQRScanSplashTheme"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.MyQRScanMainActivity" />
+        <activity
+            android:name=".view.MyQRScanMainActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="sensor"
             tools:replace="screenOrientation" />
 
-        <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-8389040971985833~3852919520"/>
     </application>
 
 </manifest>
